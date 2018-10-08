@@ -3,6 +3,7 @@ import 'package:lofter/app/view/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lofter/widget/dividing_line.dart';
+import 'package:lofter/widget/divider_line.dart';
 import 'package:lofter/widget/route_animation.dart';
 
 class MineTab extends StatelessWidget {
@@ -146,6 +147,9 @@ class MineTab extends StatelessWidget {
             child: new Container(
                 color: Colors.white,
                 child: buildContainer(_items[i]['icon'], _items[i]['name']))));
+        if (i < _items.length - 1) {
+          _widget.add(DividerLine());
+        }
       }
       return _widget;
     }

@@ -1,26 +1,26 @@
 [
     {
-        "merged": "/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "/Users/fusilin/Develop/my_first_flutter/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+        "merged": "H:\\develop\\my_first_flutter\\build\\app\\intermediates\\res\\merged\\debug\\drawable_launch_background.xml.flat",
+        "source": "H:\\develop\\my_first_flutter\\android\\app\\src\\main\\res\\drawable\\launch_background.xml"
     },
     {
-        "merged": "/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "/Users/fusilin/Develop/my_first_flutter/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+        "merged": "H:\\develop\\my_first_flutter\\build\\app\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "H:\\develop\\my_first_flutter\\android\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "/Users/fusilin/Develop/my_first_flutter/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+        "merged": "H:\\develop\\my_first_flutter\\build\\app\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "H:\\develop\\my_first_flutter\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/res/merged/debug/drawable_launch_background.xml.flat",
-        "source": "/Users/fusilin/Develop/my_first_flutter/android/app/src/main/res/drawable/launch_background.xml"
+        "merged": "H:\\develop\\my_first_flutter\\build\\app\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "H:\\develop\\my_first_flutter\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "/Users/fusilin/Develop/my_first_flutter/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "H:\\develop\\my_first_flutter\\build\\app\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "H:\\develop\\my_first_flutter\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "/Users/fusilin/Develop/my_first_flutter/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "H:\\develop\\my_first_flutter\\build\\app\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "H:\\develop\\my_first_flutter\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
     }
 ]

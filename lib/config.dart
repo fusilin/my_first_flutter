@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-// import 'package:lofter/widget/icon_tab.dart';
 import 'package:lofter/app/view/home.dart';
 import 'package:lofter/app/view/find.dart';
 import 'package:lofter/app/view/message.dart';
@@ -36,9 +35,11 @@ class HomeState extends State<LofterApp> {
 
   var _bottomTitles = ["首页", "发现", "消息", "我的"];
   var _tabImages;
-  final tabTextStyleNormal = new TextStyle(color: const Color(0xff969696), fontSize: _TabTextSize);
+  final tabTextStyleNormal =
+      new TextStyle(color: const Color(0xff969696), fontSize: _TabTextSize);
 
-  final tabTextStyleSelected = new TextStyle(color: _lPrimaryColor, fontSize: _TabTextSize);
+  final tabTextStyleSelected =
+      new TextStyle(color: _lPrimaryColor, fontSize: _TabTextSize);
   int _currentIndex = 0;
 
   Image getTabImage(path) {
@@ -47,6 +48,7 @@ class HomeState extends State<LofterApp> {
 
   @override
   void initState() {
+    // 沉浸式
     appUIStyle();
     super.initState();
     if (_tabImages == null) {
@@ -107,22 +109,23 @@ class HomeState extends State<LofterApp> {
           index: _currentIndex,
         ),
         bottomNavigationBar: new CupertinoTabBar(
-          items: <BottomNavigationBarItem>[
-            new BottomNavigationBarItem(
-                icon: getTabIcon(0), title: getTabTitle(0)),
-            new BottomNavigationBarItem(
-                icon: getTabIcon(1), title: getTabTitle(1)),
-            new BottomNavigationBarItem(
-                icon: getTabIcon(2), title: getTabTitle(2)),
-            new BottomNavigationBarItem(
-                icon: getTabIcon(3), title: getTabTitle(3))
-          ],
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-        ));
+            backgroundColor: Colors.white,
+            // activeColor: ,
+            items: <BottomNavigationBarItem>[
+              new BottomNavigationBarItem(
+                  icon: getTabIcon(0), title: getTabTitle(0)),
+              new BottomNavigationBarItem(
+                  icon: getTabIcon(1), title: getTabTitle(1)),
+              new BottomNavigationBarItem(
+                  icon: getTabIcon(2), title: getTabTitle(2)),
+              new BottomNavigationBarItem(
+                  icon: getTabIcon(3), title: getTabTitle(3))
+            ],
+            currentIndex: _currentIndex,
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            }));
   }
 }

@@ -7,6 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      title: 'lofter',
       theme: new ThemeData(primarySwatch: Colors.blue),
       home: LofterApp(),
     );

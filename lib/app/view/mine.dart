@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:lofter/app/view/search.dart';
 import 'package:flutter/cupertino.dart';
-import 'dart:ui';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lofter/widget/dividing_line.dart';
+import 'package:lofter/widget/route_animation.dart';
 
 class MineTab extends StatelessWidget {
   final double _appBarHeight = 75.0;
 
-  var _items = ["设置", "交易记录", "认证达人", "我的应用", "在线客户"];
-  var _imagePaths = [
-    "assets/images/ic_my_set.png",
-    "assets/images/ic_my_set.png",
-    "assets/images/ic_my_set.png",
-    "assets/images/ic_my_set.png",
-    "assets/images/ic_my_set.png"
+  final List<Map<String, Object>> _items = [
+    {'name': '设置', 'icon': 'assets/images/ic_my_set.png'},
+    {'name': '交易记录', 'icon': 'assets/images/ic_my_set.png'},
+    {'name': '认证达人', 'icon': 'assets/images/ic_my_set.png'},
+    {'name': '我的应用', 'icon': 'assets/images/ic_my_set.png'},
+    {'name': '在线客户', 'icon': 'assets/images/ic_my_set.png'},
   ];
+
   @override
   Widget build(BuildContext context) {
     Padding buildPadding(String label) {
@@ -78,6 +79,77 @@ class MineTab extends StatelessWidget {
           ));
     }
 
+    List buildItem(context) {
+      List<Widget> _widget = [];
+      _widget.add(
+        new GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  AnimationPageRoute(
+                      slideTween: Tween<Offset>(
+                          begin: Offset(1.0, 0.0), end: Offset.zero),
+                      builder: (c) {
+                        return Search();
+                      }));
+            },
+            child: new Container(
+              padding: const EdgeInsets.only(
+                  top: 20.0, bottom: 20.0, left: 15.0, right: 15.0),
+              color: Colors.blue,
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  new CircleAvatar(
+                    radius: 35.0,
+                    backgroundImage: new NetworkImage(
+                        "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
+                  ),
+                  new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      buildPadding("人生，没有如果"),
+                      buildPadding("ID happay-520")
+                    ],
+                  )
+                ],
+              ),
+            )),
+      );
+      _widget.add(
+        new GestureDetector(
+            onTap: () => Navigator.of(context).push(
+                  new CupertinoPageRoute<void>(
+                      builder: (BuildContext context) => new Search()),
+                ),
+            child: new Container(
+                padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                color: Colors.white,
+                child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      buildColumn('65', '关注'),
+                      buildColumn('1888', '粉丝'),
+                      buildColumn('0', '喜欢')
+                    ]))),
+      );
+      _widget.add(DividingLine(null, 10.0));
+      for (int i = 0; i < _items.length; i++) {
+        _widget.add(new GestureDetector(
+            onTap: () => Navigator.of(context).push(
+                  new CupertinoPageRoute<void>(
+                      builder: (BuildContext context) => new Search()),
+                ),
+            child: new Container(
+                color: Colors.white,
+                child: buildContainer(_items[i]['icon'], _items[i]['name']))));
+      }
+      return _widget;
+    }
+
     return Scaffold(
         appBar: AppBar(
             elevation: 0.0,
@@ -99,105 +171,7 @@ class MineTab extends StatelessWidget {
             iconTheme: IconThemeData(color: Colors.white)),
         backgroundColor: new Color.fromARGB(255, 242, 242, 245),
         body: new ListView(
-          children: [
-            new GestureDetector(
-                onTap: () {
-                  // // Fluttertoast.showToast(
-                  // //   msg: MediaQueryData.fromWindow(window)
-                  // //       .padding
-                  // //       .top
-                  // //       .toString(),
-                  //   toastLength: Toast.LENGTH_LONG,
-                  // );
-                  Navigator.of(context).push(
-                    new CupertinoPageRoute<void>(
-                        builder: (BuildContext context) => new Search()),
-                  );
-                },
-                child: new Container(
-                  padding: const EdgeInsets.only(
-                      top: 20.0, bottom: 20.0, left: 15.0, right: 15.0),
-                  color: Colors.blue,
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      new CircleAvatar(
-                        radius: 35.0,
-                        backgroundImage: new NetworkImage(
-                            "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
-                      ),
-                      new Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          buildPadding("人生，没有如果"),
-                          buildPadding("ID happay-520")
-                        ],
-                      )
-                    ],
-                  ),
-                )),
-            new GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                      new CupertinoPageRoute<void>(
-                          builder: (BuildContext context) => new Search()),
-                    ),
-                child: new Container(
-                    padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                    color: Colors.white,
-                    child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          buildColumn('65', '关注'),
-                          buildColumn('1888', '粉丝'),
-                          buildColumn('0', '喜欢')
-                        ]))),
-            new Container(
-              padding: const EdgeInsets.only(top: 10.0),
-            ),
-            new GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                      new CupertinoPageRoute<void>(
-                          builder: (BuildContext context) => new Search()),
-                    ),
-                child: new Container(
-                    color: Colors.white,
-                    child: buildContainer(_imagePaths[0], _items[0]))),
-            new GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                      new CupertinoPageRoute<void>(
-                          builder: (BuildContext context) => new Search()),
-                    ),
-                child: new Container(
-                    color: Colors.white,
-                    child: buildContainer(_imagePaths[1], _items[1]))),
-            new GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                      new CupertinoPageRoute<void>(
-                          builder: (BuildContext context) => new Search()),
-                    ),
-                child: new Container(
-                    color: Colors.white,
-                    child: buildContainer(_imagePaths[2], _items[2]))),
-            new GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                      new CupertinoPageRoute<void>(
-                          builder: (BuildContext context) => new Search()),
-                    ),
-                child: new Container(
-                    color: Colors.white,
-                    child: buildContainer(_imagePaths[3], _items[3]))),
-            new GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                      new CupertinoPageRoute<void>(
-                          builder: (BuildContext context) => new Search()),
-                    ),
-                child: new Container(
-                    color: Colors.white,
-                    child: buildContainer(_imagePaths[4], _items[4])))
-          ],
+          children: buildItem(context),
         ));
   }
 }

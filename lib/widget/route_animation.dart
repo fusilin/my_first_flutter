@@ -27,7 +27,6 @@ class AnimationPageRoute<T> extends MaterialPageRoute<T> {
         child: child,
       ),
     );
-
     return widget;
   }
 

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "H:\\develop\\my_first_flutter\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
-                    "source": "H:\\develop\\my_first_flutter\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "/Users/fusilin/Develop/my_first_flutter/android/app/src/main/res/values/styles.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -4,10 +4,14 @@ import 'package:lofter/app/view/search.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:ui';
 
+import 'dart:async';
+import 'package:flutter_refresh/flutter_refresh.dart';
+
 const double _kMinFlingVelocity = 800.0;
 
 class Photo {
   Photo({this.assetName});
+
   final String assetName;
 
   // String get tag => assetName; // Assuming that all asset names are unique.
@@ -20,6 +24,7 @@ class GridPhotoViewer extends StatefulWidget {
 
   const GridPhotoViewer({Key key, this.assertName}) : super(key: key);
   final String assertName;
+
   @override
   _GridPhotoViewerState createState() => new _GridPhotoViewerState();
 }
@@ -118,6 +123,14 @@ class HomeTab extends StatelessWidget {
   //           'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2097455549,1668468150&fm=27&gp=0.jpg')
   // ];
 
+  Future<Null> onFooterRefresh() {
+    return new Future.delayed(new Duration(seconds: 2), () {});
+  }
+
+  Future<Null> onHeaderRefresh() {
+    return new Future.delayed(new Duration(seconds: 2), () {});
+  }
+
   final List<Map<String, Object>> _items = [
     {
       'name': '人生，没有如果',
@@ -158,6 +171,7 @@ class HomeTab extends StatelessWidget {
   ];
   final TextStyle _biggerFont =
       new TextStyle(fontSize: 18.0, color: Colors.black);
+
   // static const String routeName = '/material/tabs';
   Padding buildPadding(String label) {
     return new Padding(
@@ -182,80 +196,104 @@ class HomeTab extends StatelessWidget {
   }
 
   Widget attentionListView(context) {
-    return new ListView.builder(
-        itemCount: _items.length,
-        itemBuilder: (context, i) {
-          return Container(
-            padding: const EdgeInsets.only(),
-            color: Colors.white,
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                new GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(new CupertinoPageRoute<void>(
-                          builder: (BuildContext context) => new Search()));
-                    },
-                    child: new Container(
-                      padding: const EdgeInsets.only(
-                          top: 10.0, bottom: 10.0, left: 15.0),
-                      color: Colors.white,
-                      child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          new CircleAvatar(
-                            radius: 25.0,
-                            backgroundImage:
-                                new NetworkImage(_items[i]['headImg']),
-                          ),
-                          new Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[buildPadding(_items[i]['name'])],
-                          )
-                        ],
-                      ),
-                    )),
-                new GestureDetector(
-                    onTap: () => showPhoto(context, _items[i]['contentImg']),
-                    child: new Container(
-                        color: Colors.white,
-                        padding: const EdgeInsets.all(0.0),
-                        width: window.physicalSize.width,
-                        // child: new Image.asset(_items[i]['contentImg'],
-                        child: new Image.network(_items[i]['contentImg'],
-                            fit: BoxFit.fitWidth))),
-                // child: new Image.asset('assets/images/ic_mn.png',
-                //     fit: BoxFit.fitHeight))),
-                new GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                          new CupertinoPageRoute<void>(
-                              builder: (BuildContext context) => new Search()),
+    return new Refresh(
+      onFooterRefresh: onFooterRefresh,
+      onHeaderRefresh: onHeaderRefresh,
+      childBuilder: (BuildContext context,
+          {ScrollController controller, ScrollPhysics physics}) {
+        return new Container(
+            child: new ListView.builder(
+                physics: physics,
+                controller: controller,
+                itemCount: _items.length,
+                itemBuilder: (context, i) {
+                  return Container(
+                    padding: const EdgeInsets.only(),
+                    color: Colors.white,
+                    child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        new GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                  new CupertinoPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          new Search()));
+                            },
+                            child: new Container(
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, bottom: 10.0, left: 15.0),
+                              color: Colors.white,
+                              child: new Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+//                                  new Image.network(
+//                                      _items[i]['headImg'],
+//                                      fit: BoxFit.cover),
+                                  new CircleAvatar(
+                                    radius: 25.0,
+                                    backgroundImage:
+                                        new NetworkImage(_items[i]['headImg']),
+                                  ),
+                                  new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      buildPadding(_items[i]['name'])
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )),
+                        new GestureDetector(
+                            onTap: () =>
+                                showPhoto(context, _items[i]['contentImg']),
+                            child: new Container(
+                                color: Colors.white,
+                                padding: const EdgeInsets.all(0.0),
+                                width: window.physicalSize.width,
+                                // child: new Image.asset(_items[i]['contentImg'],
+                                child: new Image.network(
+                                    _items[i]['contentImg'],
+                                    fit: BoxFit.fitWidth))),
+                        // child: new Image.asset('assets/images/ic_mn.png',
+                        //     fit: BoxFit.fitHeight))),
+                        new GestureDetector(
+                            onTap: () => Navigator.of(context).push(
+                                  new CupertinoPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          new Search()),
+                                ),
+                            child: new Container(
+                              padding:
+                                  // const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                  const EdgeInsets.all(0.0),
+                              color: Colors.white,
+                              child: new Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 15.0,
+                                      right: 15.0,
+                                      top: 15.0,
+                                      bottom: 10.0),
+                                  child: new Text(_items[i]['text'],
+                                      style: new TextStyle(fontSize: 14.0))),
+                            )
+                            // child: new Image.asset("assets/images/ic_mn.png", height: 180.0, fit: BoxFit.cover)),
+                            ),
+                        // new Divider(),
+                        new Container(
+                          color: new Color.fromARGB(255, 242, 242, 245),
+                          padding: const EdgeInsets.only(top: 10.0),
                         ),
-                    child: new Container(
-                      padding:
-                          // const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                          const EdgeInsets.all(0.0),
-                      color: Colors.white,
-                      child: new Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.0, right: 15.0, top: 15.0, bottom: 10.0),
-                          child: new Text(_items[i]['text'],
-                              style: new TextStyle(fontSize: 14.0))),
-                    )
-                    // child: new Image.asset("assets/images/ic_mn.png", height: 180.0, fit: BoxFit.cover)),
+                      ],
                     ),
-                // new Divider(),
-                new Container(
-                  color: new Color.fromARGB(255, 242, 242, 245),
-                  padding: const EdgeInsets.only(top: 10.0),
-                ),
-              ],
-            ),
-          );
-        });
+                  );
+                }));
+      },
+    );
   }
 
   void showPhoto(BuildContext context, String assertName) {
@@ -274,16 +312,29 @@ class HomeTab extends StatelessWidget {
     }));
   }
 
-  Widget _buildItem(i) {
-    if (_items[i]['img'] == null) {
-      return null;
-    }
-    // return
-  }
+//  Widget _buildItem(i) {
+//    if (_items[i]['img'] == null) {
+//      return null;
+//    }
+//    // return
+//  }
 
   Widget subscriptionListView(context) {
-    return new Center(
-      child: new Text("暂没有订阅"),
+    return new Refresh(
+      onFooterRefresh: onFooterRefresh,
+      onHeaderRefresh: onHeaderRefresh,
+      childBuilder: (BuildContext context,
+          {ScrollController controller, ScrollPhysics physics}) {
+        return new Container(
+            child: new ListView(
+                physics: physics,
+                controller: controller,
+                children: [
+              new Center(
+                child: new Text("暂没有订阅"),
+              )
+            ]));
+      },
     );
   }
 
@@ -291,19 +342,19 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return new SafeArea(
         child: new DefaultTabController(
-      length: 2,
-      child: new Scaffold(
-          appBar: new TabBar(
-            labelColor: Colors.black,
-            indicatorColor: Colors.black,
-            unselectedLabelColor: Colors.black,
-            tabs: <Widget>[new Tab(text: "关注"), new Tab(text: "订阅")],
-          ),
-          backgroundColor: Colors.white,
-          body: new TabBarView(children: <Widget>[
-            attentionListView(context),
-            subscriptionListView(context)
-          ])),
-    ));
+            length: 2,
+            child: new Scaffold(
+              appBar: new TabBar(
+                labelColor: Colors.black,
+                indicatorColor: Colors.black,
+                unselectedLabelColor: Colors.black,
+                tabs: <Widget>[new Tab(text: "关注"), new Tab(text: "订阅")],
+              ),
+              backgroundColor: Colors.white,
+              body: new TabBarView(children: <Widget>[
+                attentionListView(context),
+                subscriptionListView(context)
+              ]),
+            )));
   }
 }

@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'lofter',
       theme: new ThemeData(primarySwatch: Colors.blue),
-      home: LofterApp(),
+      home: LofterApp()
     );
   }
 }

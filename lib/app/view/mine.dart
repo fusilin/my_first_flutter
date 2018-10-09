@@ -5,6 +5,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lofter/widget/dividing_line.dart';
 import 'package:lofter/widget/divider_line.dart';
 import 'package:lofter/widget/route_animation.dart';
+import 'package:lofter/widget/pull_refresh.dart';
+import 'dart:async';
+import 'package:flutter_refresh/flutter_refresh.dart';
 
 class MineTab extends StatelessWidget {
   final double _appBarHeight = 75.0;
@@ -16,6 +19,14 @@ class MineTab extends StatelessWidget {
     {'name': '我的应用', 'icon': 'assets/images/ic_my_set.png'},
     {'name': '在线客户', 'icon': 'assets/images/ic_my_set.png'},
   ];
+
+  Future<Null> onFooterRefresh() {
+    return new Future.delayed(new Duration(seconds: 2), () {});
+  }
+
+  Future<Null> onHeaderRefresh() {
+    return new Future.delayed(new Duration(seconds: 2), () {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +117,7 @@ class MineTab extends StatelessWidget {
                     radius: 35.0,
                     backgroundImage: new NetworkImage(
                         "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
+//                    backgroundImage: new AssetImage("assets/images/ic_arrow_right.png"),
                   ),
                   new Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -132,7 +144,7 @@ class MineTab extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      buildColumn('65', '关注'),
+                      buildColumn('66', '关注'),
                       buildColumn('1888', '粉丝'),
                       buildColumn('0', '喜欢')
                     ]))),
@@ -174,8 +186,18 @@ class MineTab extends StatelessWidget {
             // icon的主题设置
             iconTheme: IconThemeData(color: Colors.white)),
         backgroundColor: new Color.fromARGB(255, 242, 242, 245),
-        body: new ListView(
-          children: buildItem(context),
+        body: new Refresh(
+          onFooterRefresh: onFooterRefresh,
+          onHeaderRefresh: onHeaderRefresh,
+          childBuilder: (BuildContext context,
+              {ScrollController controller, ScrollPhysics physics}) {
+            return new Container(
+                child: new ListView(
+              physics: physics,
+              controller: controller,
+              children: buildItem(context),
+            ));
+          },
         ));
   }
 }

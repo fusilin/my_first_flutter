@@ -46,7 +46,7 @@ class HomeState extends State<LofterApp> {
     print(path);
     return new Icon(path,
         color: isActive ?  _tabIconActiveColor: _tabIconNormalColor,
-        size: index == 2 ? 30.0 : 25.0);
+        size: index == 2 ? 30.0 : 26.0);
   }
 
   @override

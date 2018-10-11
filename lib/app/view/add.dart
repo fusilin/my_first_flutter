@@ -74,10 +74,12 @@ class AddTabState extends State<AddTab> {
         textAlign: TextAlign.center,
       );
     } else if (controller.value.initialized) {
-      return Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: AspectRatioVideo(controller),
-      );
+      return Container(
+          padding: EdgeInsets.all(0.0), child: AspectRatioVideo(controller));
+      // return Padding(
+      //   padding: const EdgeInsets.all(0.0),
+      //   child: AspectRatioVideo(controller),
+      // );
     } else {
       return const Text(
         'Error Loading Video',
@@ -203,11 +205,9 @@ class AspectRatioVideoState extends State<AspectRatioVideo> {
   Widget build(BuildContext context) {
     if (initialized) {
       final Size size = controller.value.size;
-      return new Center(
-        child: new AspectRatio(
-          aspectRatio: size.width / size.height,
-          child: new VideoPlayer(controller),
-        ),
+      return new AspectRatio(
+        aspectRatio: size.height / size.width,
+        child: new VideoPlayer(controller),
       );
     } else {
       return new Container();

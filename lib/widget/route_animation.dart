@@ -23,17 +23,18 @@ class AnimationPageRoute<T> extends MaterialPageRoute<T> {
     Widget widget = SlideTransition(
       position: _getSlideAnimation(animation),
       child: FadeTransition(
-         opacity: _getFadeAnimation(animation),
+        opacity: _getFadeAnimation(animation),
         child: child,
       ),
     );
+
     return widget;
   }
 
   Animation<Offset> _getSlideAnimation(Animation<double> animation) {
     if (slideTween == null) {
       slideTween = new Tween<Offset>(
-        begin: new Offset(0.0, 0.0),
+        begin: new Offset(1.0, 0.0),
         end: Offset.zero,
       );
     }
@@ -45,12 +46,12 @@ class AnimationPageRoute<T> extends MaterialPageRoute<T> {
   Animation<double> _getFadeAnimation(Animation<double> animation) {
     if (fadeTween == null) {
       fadeTween = new Tween<double>(
-        begin: 0.0,
+        begin: 1.0,
         end: 1.0,
       );
     }
 
-    return fadeTween.animate(
-        new CurvedAnimation(parent: animation, curve: Curves.easeIn));
+    return fadeTween
+        .animate(new CurvedAnimation(parent: animation, curve: Curves.easeIn));
   }
 }

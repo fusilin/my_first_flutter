@@ -183,7 +183,7 @@ class MineTab extends StatelessWidget {
                 color: Colors.white,
                 child: buildContainer(_items[i]['icon'], _items[i]['name']))));
         if (i < _items.length - 1) {
-          _widget.add(DividerLine());
+          _widget.add(DividerLine(1.0, null, null, null));
         }
       }
       return _widget;

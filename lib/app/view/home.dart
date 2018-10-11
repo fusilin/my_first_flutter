@@ -6,6 +6,8 @@ import 'dart:ui';
 
 import 'dart:async';
 import 'package:flutter_refresh/flutter_refresh.dart';
+import 'package:lofter/widget/dividing_line.dart';
+import 'package:lofter/widget/divider_line.dart';
 
 const double _kMinFlingVelocity = 800.0;
 
@@ -195,13 +197,40 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  GestureDetector buildGestureDetector(IconData _icon, String _toastMsg) {
+  GestureDetector buildGestureDetector(IconData icon, String toastMsg) {
     return new GestureDetector(
-      onTap: () => Fluttertoast.showToast(msg: '$_toastMsg'),
+      onTap: () => Fluttertoast.showToast(msg: '$toastMsg'),
       child: new Container(
         color: Colors.white,
-        padding: const EdgeInsets.only(right: 20.0),
-        child: new Icon(_icon, size: 22.0, color: Color(0xffBBBBBB)),
+        padding: const EdgeInsets.only(right: 30.0),
+        child: new Icon(icon, size: 24.0, color: Color(0xffBBBBBB)),
+      ),
+    );
+  }
+
+  GestureDetector buildModalItem(
+      BuildContext context, String label, String toastMsg) {
+    return new GestureDetector(
+      // 解决点击区域的问题
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        if (label != "取消") {
+          Fluttertoast.showToast(msg: '$toastMsg');
+        }
+        Navigator.of(context).pop();
+      },
+      child: new Container(
+        padding: EdgeInsets.symmetric(vertical: 15.0),
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Text("$label",
+                style: new TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w600))
+          ],
+        ),
       ),
     );
   }
@@ -351,8 +380,38 @@ class HomeTab extends StatelessWidget {
                               new Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
-                                  buildGestureDetector(
-                                      Icons.more_horiz, 'modal待完善'),
+                                  new GestureDetector(
+                                    onTap: () {
+                                      showModalBottomSheet<void>(
+                                          context: context,
+                                          builder: (BuildContext _context) {
+                                            return new Container(
+                                                child: new Padding(
+                                              padding:
+                                                  const EdgeInsets.all(0.0),
+                                              child: new Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  buildModalItem(_context,
+                                                      '复制链接', '复制功能待完善'),
+                                                  DividerLine(
+                                                      1.0, 0.0, null, null),
+                                                  buildModalItem(_context,
+                                                      '屏蔽相关标签', '屏蔽待完善'),
+                                                  DividingLine(null, 5.0),
+                                                  buildModalItem(
+                                                      _context, '取消', ''),
+                                                ],
+                                              ),
+                                            ));
+                                          });
+                                    },
+                                    child: new Container(
+                                      color: Colors.white,
+                                      child: new Icon(Icons.more_horiz,
+                                          size: 24.0, color: Color(0xffBBBBBB)),
+                                    ),
+                                  )
                                 ],
                               )
                             ],
@@ -369,10 +428,7 @@ class HomeTab extends StatelessWidget {
                                         fontSize: 12.0)),
                               ],
                             )),
-                        new Container(
-                          color: new Color.fromARGB(255, 242, 242, 245),
-                          padding: const EdgeInsets.only(top: 10.0),
-                        ),
+                        DividingLine(null, null),
                       ],
                     ),
                   );
@@ -396,13 +452,6 @@ class HomeTab extends StatelessWidget {
       );
     }));
   }
-
-//  Widget _buildItem(i) {
-//    if (_items[i]['img'] == null) {
-//      return null;
-//    }
-//    // return
-//  }
 
   Widget subscriptionListView(context) {
     return new Refresh(

@@ -5,13 +5,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lofter/widget/dividing_line.dart';
 import 'package:lofter/widget/divider_line.dart';
 import 'package:lofter/widget/route_animation.dart';
-import 'package:lofter/widget/pull_refresh.dart';
 import 'dart:async';
 import 'package:flutter_refresh/flutter_refresh.dart';
 
 class MineTab extends StatelessWidget {
-  final double _appBarHeight = 75.0;
-
   final List<Map<String, Object>> _items = [
     {'name': '设置', 'icon': 'assets/images/ic_my_set.png'},
     {'name': '交易记录', 'icon': 'assets/images/ic_my_set.png'},
@@ -30,11 +27,11 @@ class MineTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Padding buildPadding(String label) {
+    Padding buildPadding(String label, Color _color, double _fontSize) {
       return new Padding(
           padding: const EdgeInsets.only(left: 10.0),
           child: new Text(label,
-              style: new TextStyle(color: Colors.white, fontSize: 16.0)));
+              style: new TextStyle(color: _color, fontSize: _fontSize)));
     }
 
     Column buildColumn(String number, String label) {
@@ -71,8 +68,8 @@ class MineTab extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              new Image.asset("assets/images/ic_arrow_right.png",
-                  width: 14.0, height: 14.0),
+              new Icon(Icons.chevron_right,
+                  size: 22.0, color: const Color(0xff999999))
             ],
           )
         ],
@@ -106,37 +103,59 @@ class MineTab extends StatelessWidget {
                       }));
             },
             child: new Container(
-              padding: const EdgeInsets.only(
-                  top: 20.0, bottom: 20.0, left: 15.0, right: 15.0),
-              color: Colors.blue,
-              child: new Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  new CircleAvatar(
-                    radius: 35.0,
-                    backgroundImage: new NetworkImage(
-                        "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
-//                    backgroundImage: new AssetImage("assets/images/ic_arrow_right.png"),
-                  ),
-                  new Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      buildPadding("人生，没有如果"),
-                      buildPadding("ID happay-520")
-                    ],
-                  )
-                ],
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                    image: new AssetImage("assets/images/v.jpg"),
+                    fit: BoxFit.fitWidth),
+              ),
+              child: new Container(
+                padding: const EdgeInsets.only(
+                    top: 30.0, bottom: 30.0, left: 15.0, right: 15.0),
+                color: const Color.fromARGB(200, 242, 242, 245),
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new CircleAvatar(
+                          radius: 40.0,
+                          backgroundImage: new NetworkImage(
+                              "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
+                        ),
+                        new Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            buildPadding("人生，没有如果", Colors.black, 16.0),
+                            buildPadding(
+                                "ID happay-520", Color(0xff666666), 12.0)
+                          ],
+                        )
+                      ],
+                    ),
+                    new Icon(
+                      Icons.chevron_right,
+                      size: 22.0,
+                      color: const Color(0xfff4f4f8),
+                    )
+                  ],
+                ),
               ),
             )),
       );
       _widget.add(
         new GestureDetector(
-            onTap: () => Navigator.of(context).push(
-                  new CupertinoPageRoute<void>(
-                      builder: (BuildContext context) => new Search()),
-                ),
+            onTap: () => Navigator.push(
+                context,
+                AnimationPageRoute(
+                    slideTween: Tween<Offset>(
+                        begin: Offset(1.0, 0.0), end: Offset.zero),
+                    builder: (c) {
+                      return Search();
+                    })),
             child: new Container(
                 padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
                 color: Colors.white,
@@ -152,10 +171,14 @@ class MineTab extends StatelessWidget {
       _widget.add(DividingLine(null, 10.0));
       for (int i = 0; i < _items.length; i++) {
         _widget.add(new GestureDetector(
-            onTap: () => Navigator.of(context).push(
-                  new CupertinoPageRoute<void>(
-                      builder: (BuildContext context) => new Search()),
-                ),
+            onTap: () => Navigator.push(
+                context,
+                AnimationPageRoute(
+                    slideTween: Tween<Offset>(
+                        begin: Offset(1.0, 0.0), end: Offset.zero),
+                    builder: (c) {
+                      return Search();
+                    })),
             child: new Container(
                 color: Colors.white,
                 child: buildContainer(_items[i]['icon'], _items[i]['name']))));
@@ -166,38 +189,21 @@ class MineTab extends StatelessWidget {
       return _widget;
     }
 
-    return Scaffold(
-        appBar: AppBar(
-            elevation: 0.0,
-            // 顶部标题
-            title: Text(
-              '我的',
-              style: TextStyle(color: Colors.white),
-            ),
-            actions: <Widget>[
-              IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    // 打开搜索页面
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Search()));
-                  })
-            ],
-            // icon的主题设置
-            iconTheme: IconThemeData(color: Colors.white)),
-        backgroundColor: new Color.fromARGB(255, 242, 242, 245),
-        body: new Refresh(
-          onFooterRefresh: onFooterRefresh,
-          onHeaderRefresh: onHeaderRefresh,
-          childBuilder: (BuildContext context,
-              {ScrollController controller, ScrollPhysics physics}) {
-            return new Container(
-                child: new ListView(
-              physics: physics,
-              controller: controller,
-              children: buildItem(context),
-            ));
-          },
-        ));
+    return new SafeArea(
+      child: Scaffold(
+          backgroundColor: new Color.fromARGB(255, 242, 242, 245),
+          body: new Refresh(
+            onHeaderRefresh: onHeaderRefresh,
+            childBuilder: (BuildContext context,
+                {ScrollController controller, ScrollPhysics physics}) {
+              return new Container(
+                  child: new ListView(
+                physics: physics,
+                controller: controller,
+                children: buildItem(context),
+              ));
+            },
+          )),
+    );
   }
 }

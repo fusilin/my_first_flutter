@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lofter/app/view/home.dart';
 import 'package:lofter/app/view/find.dart';
+import 'package:lofter/app/view/add.dart';
 import 'package:lofter/app/view/message.dart';
 import 'package:lofter/app/view/mine.dart';
 import 'package:flutter/services.dart';
 
-const int HOME_INDEX = 0;
-const int FIND_INDEX = 1;
-const int MESSAGE_INDEX = 2;
-const int MINE_INDEX = 3;
 const double _TabTextSize = 11.0;
-Color _lPrimaryColor = new Color.fromARGB(255, 0, 215, 198);
+Color _tabTextNormalColor = new Color(0xffDDDDDD);
+Color _tabTextActiveColor = new Color(0xff666666);
+Color _tabIconNormalColor = new Color(0xff999999);
+Color _tabIconActiveColor = new Color(0xff444444);
 
 class LofterApp extends StatefulWidget {
   @override
@@ -33,17 +33,20 @@ class HomeState extends State<LofterApp> {
     SystemChrome.setSystemUIOverlayStyle(uiStyle);
   }
 
-  var _bottomTitles = ["首页", "发现", "消息", "我的"];
+  var _bottomTitles = ["首页", "发现", "添加", "消息", "我的"];
   var _tabImages;
   final tabTextStyleNormal =
-      new TextStyle(color: const Color(0xff969696), fontSize: _TabTextSize);
+      new TextStyle(color: _tabTextNormalColor, fontSize: _TabTextSize);
 
   final tabTextStyleSelected =
-      new TextStyle(color: _lPrimaryColor, fontSize: _TabTextSize);
+      new TextStyle(color: _tabTextActiveColor, fontSize: _TabTextSize);
   int _currentIndex = 0;
 
-  Image getTabImage(path) {
-    return new Image.asset(path, width: 25.0, height: 25.0);
+  Icon getTabImage(path, isActive, index) {
+    print(path);
+    return new Icon(path,
+        color: isActive ?  _tabIconActiveColor: _tabIconNormalColor,
+        size: index == 2 ? 30.0 : 25.0);
   }
 
   @override
@@ -53,34 +56,32 @@ class HomeState extends State<LofterApp> {
     super.initState();
     if (_tabImages == null) {
       _tabImages = [
+        [getTabImage(Icons.home, true, 0), getTabImage(Icons.home, false, 0)],
         [
-          getTabImage('assets/images/ic_main_tab_company_nor.png'),
-          getTabImage('assets/images/ic_main_tab_company_pre.png')
+          getTabImage(Icons.supervisor_account, true, 1),
+          getTabImage(Icons.supervisor_account, false, 1)
         ],
         [
-          getTabImage('assets/images/ic_main_tab_find_nor.png'),
-          getTabImage('assets/images/ic_main_tab_find_pre.png')
+          getTabImage(Icons.add_circle, true, 2),
+          getTabImage(Icons.add_circle, false, 2)
         ],
         [
-          getTabImage('assets/images/ic_main_tab_contacts_nor.png'),
-          getTabImage('assets/images/ic_main_tab_contacts_pre.png')
+          getTabImage(Icons.notifications, true, 3),
+          getTabImage(Icons.notifications, false, 3)
         ],
         [
-          getTabImage('assets/images/ic_main_tab_my_nor.png'),
-          getTabImage('assets/images/ic_main_tab_my_pre.png')
+          getTabImage(Icons.person, true, 4),
+          getTabImage(Icons.person, false, 4)
         ]
       ];
     }
   }
 
-  // @override
-  // void dispose() {}
-
-  Image getTabIcon(int currentIndex) {
+  Icon getTabIcon(int currentIndex) {
     if (currentIndex == _currentIndex) {
-      return _tabImages[currentIndex][1];
+      return _tabImages[currentIndex][0];
     }
-    return _tabImages[currentIndex][0];
+    return _tabImages[currentIndex][1];
   }
 
   Text getTabTitle(int currentIndex) {
@@ -97,35 +98,37 @@ class HomeState extends State<LofterApp> {
 
   @override
   Widget build(BuildContext context) {
-    // initData();
     return new Scaffold(
         body: new IndexedStack(
           children: <Widget>[
             new HomeTab(),
             new FindTab(),
+            new AddTab(),
             new MessageTab(),
             new MineTab()
           ],
           index: _currentIndex,
         ),
         bottomNavigationBar: new CupertinoTabBar(
-            backgroundColor: Colors.white,
-            // activeColor: ,
-            items: <BottomNavigationBarItem>[
-              new BottomNavigationBarItem(
-                  icon: getTabIcon(0), title: getTabTitle(0)),
-              new BottomNavigationBarItem(
-                  icon: getTabIcon(1), title: getTabTitle(1)),
-              new BottomNavigationBarItem(
-                  icon: getTabIcon(2), title: getTabTitle(2)),
-              new BottomNavigationBarItem(
-                  icon: getTabIcon(3), title: getTabTitle(3))
-            ],
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            }));
+          backgroundColor: Colors.white,
+          items: <BottomNavigationBarItem>[
+            new BottomNavigationBarItem(
+                icon: getTabIcon(0), title: getTabTitle(0)),
+            new BottomNavigationBarItem(
+                icon: getTabIcon(1), title: getTabTitle(1)),
+            new BottomNavigationBarItem(
+                icon: getTabIcon(2), title: new Text('')),
+            new BottomNavigationBarItem(
+                icon: getTabIcon(3), title: getTabTitle(3)),
+            new BottomNavigationBarItem(
+                icon: getTabIcon(4), title: getTabTitle(4)),
+          ],
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+        ));
   }
 }

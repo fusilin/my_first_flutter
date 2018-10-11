@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'lofter',
-      theme: new ThemeData(primarySwatch: Colors.blue),
+      theme: new ThemeData(primaryColor: Colors.white),
       home: LofterApp()
     );
   }

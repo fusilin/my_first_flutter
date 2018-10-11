@@ -195,6 +195,17 @@ class HomeTab extends StatelessWidget {
     );
   }
 
+  GestureDetector buildGestureDetector(IconData _icon, String _toastMsg) {
+    return new GestureDetector(
+      onTap: () => Fluttertoast.showToast(msg: '$_toastMsg'),
+      child: new Container(
+        color: Colors.white,
+        padding: const EdgeInsets.only(right: 20.0),
+        child: new Icon(_icon, size: 22.0, color: Color(0xffBBBBBB)),
+      ),
+    );
+  }
+
   Widget attentionListView(context) {
     return new Refresh(
       onFooterRefresh: onFooterRefresh,
@@ -216,10 +227,11 @@ class HomeTab extends StatelessWidget {
                       children: [
                         new GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(
-                                  new CupertinoPageRoute<void>(
-                                      builder: (BuildContext context) =>
-                                          new Search()));
+                              Navigator.push(context,
+                                  new MaterialPageRoute<void>(
+                                      builder: (BuildContext context) {
+                                return new Search();
+                              }));
                             },
                             child: new Container(
                               padding: const EdgeInsets.only(
@@ -229,9 +241,6 @@ class HomeTab extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-//                                  new Image.network(
-//                                      _items[i]['headImg'],
-//                                      fit: BoxFit.cover),
                                   new CircleAvatar(
                                     radius: 25.0,
                                     backgroundImage:
@@ -262,28 +271,104 @@ class HomeTab extends StatelessWidget {
                         // child: new Image.asset('assets/images/ic_mn.png',
                         //     fit: BoxFit.fitHeight))),
                         new GestureDetector(
-                            onTap: () => Navigator.of(context).push(
-                                  new CupertinoPageRoute<void>(
-                                      builder: (BuildContext context) =>
-                                          new Search()),
-                                ),
+                            onTap: () => Navigator.push(context,
+                                    new MaterialPageRoute<void>(
+                                        builder: (BuildContext context) {
+                                  return new Search();
+                                })),
                             child: new Container(
                               padding:
                                   // const EdgeInsets.only(top: 10.0, bottom: 10.0),
                                   const EdgeInsets.all(0.0),
                               color: Colors.white,
                               child: new Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 15.0,
-                                      right: 15.0,
-                                      top: 15.0,
-                                      bottom: 10.0),
+                                  padding: EdgeInsets.all(15.0),
                                   child: new Text(_items[i]['text'],
-                                      style: new TextStyle(fontSize: 14.0))),
+                                      style: new TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w500))),
                             )
                             // child: new Image.asset("assets/images/ic_mn.png", height: 180.0, fit: BoxFit.cover)),
                             ),
                         // new Divider(),
+                        new GestureDetector(
+                          onTap: () =>
+                              Fluttertoast.showToast(msg: '大话西游话题页待完善'),
+                          child: new Container(
+                            margin: EdgeInsets.only(
+                                left: 15.0, right: 15.0, bottom: 10.0),
+                            height: 30.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                new Container(
+                                  color: Colors.grey[100],
+                                  padding: EdgeInsets.all(5.0),
+                                  child: new Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      new Icon(
+                                        Icons.link,
+                                        size: 22.0,
+                                        color: Color(0xffBBBBBB),
+                                      ),
+                                      new Text("大话西游",
+                                          style: new TextStyle(
+                                              color: Color(0xffBBBBBB),
+                                              fontSize: 13.0)),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        new Container(
+                          padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                          height: 2.0,
+                          color: Colors.white,
+                          child: new Image.asset(
+                            'assets/images/dot.png',
+                            fit: BoxFit.contain,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        new Container(
+                          padding: EdgeInsets.all(15.0),
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              new Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  buildGestureDetector(
+                                      Icons.favorite_border, '点赞待完善'),
+                                  buildGestureDetector(Icons.message, '评论待完善'),
+                                  buildGestureDetector(Icons.share, '分享待完善'),
+                                  buildGestureDetector(Icons.thumb_up, '推荐待完善'),
+                                ],
+                              ),
+                              new Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  buildGestureDetector(
+                                      Icons.more_horiz, 'modal待完善'),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        new Container(
+                            padding: EdgeInsets.only(left: 15.0, bottom: 10.0),
+                            child: new Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                new Text("88热度",
+                                    style: new TextStyle(
+                                        color: Color(0xff888888),
+                                        fontSize: 12.0)),
+                              ],
+                            )),
                         new Container(
                           color: new Color.fromARGB(255, 242, 242, 245),
                           padding: const EdgeInsets.only(top: 10.0),

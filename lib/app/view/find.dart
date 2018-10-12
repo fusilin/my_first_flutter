@@ -29,6 +29,7 @@ class FindTabState extends State<FindTab> {
               style: TextStyle(color: Colors.green, fontSize: 14.0),
             ),
             heroTag: 'test1',
+            tooltip: 'test1',
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
@@ -36,6 +37,7 @@ class FindTabState extends State<FindTab> {
               onPressed: () {},
               child: const Icon(Icons.touch_app),
               heroTag: 'test2',
+              tooltip: 'test2',
             ),
           )
         ],

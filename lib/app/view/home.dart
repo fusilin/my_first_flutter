@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:flutter_refresh/flutter_refresh.dart';
 import 'package:lofter/widget/dividing_line.dart';
 import 'package:lofter/widget/divider_line.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 const double _kMinFlingVelocity = 800.0;
 
@@ -110,7 +111,6 @@ class _GridPhotoViewerState extends State<GridPhotoViewer>
           transform: new Matrix4.identity()
             ..translate(_offset.dx, _offset.dy)
             ..scale(_scale),
-          // child: new Image.network(widget.photo.assetName, fit: BoxFit.cover),
           child: new Image.network(widget.assertName, fit: BoxFit.fitWidth),
         ),
       ),
@@ -124,6 +124,8 @@ class HomeTab extends StatelessWidget {
   //       assetName:
   //           'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2097455549,1668468150&fm=27&gp=0.jpg')
   // ];
+
+  int _first = 0;
 
   Future<Null> onFooterRefresh() {
     return new Future.delayed(new Duration(seconds: 2), () {});
@@ -235,6 +237,16 @@ class HomeTab extends StatelessWidget {
     );
   }
 
+  Widget _sizedContainer(Widget child) {
+    return new SizedBox(
+      width: 300.0,
+      height: 150.0,
+      child: new Center(
+        child: child,
+      ),
+    );
+  }
+
   Widget attentionListView(context) {
     return new Refresh(
       onFooterRefresh: onFooterRefresh,
@@ -290,15 +302,25 @@ class HomeTab extends StatelessWidget {
                             onTap: () =>
                                 showPhoto(context, _items[i]['contentImg']),
                             child: new Container(
-                                color: Colors.white,
-                                padding: const EdgeInsets.all(0.0),
-                                width: window.physicalSize.width,
-                                // child: new Image.asset(_items[i]['contentImg'],
-                                child: new Image.network(
-                                    _items[i]['contentImg'],
-                                    fit: BoxFit.fitWidth))),
-                        // child: new Image.asset('assets/images/ic_mn.png',
-                        //     fit: BoxFit.fitHeight))),
+                              color: Colors.white,
+                              padding: const EdgeInsets.all(0.0),
+                              width: window.physicalSize.width,
+                              // child: new Image.asset(),
+                              // child: new Image.asset(_items[i]['contentImg'],
+                              child: new SizedBox(
+                                width: MediaQuery.of(context)
+                                    .size
+                                    .width
+                                    .toDouble(),
+                                child: new CachedNetworkImage(
+                                  fit: BoxFit.fitWidth,
+                                  imageUrl: _items[i]['contentImg'],
+                                  errorWidget: new Icon(Icons.error),
+                                  fadeOutDuration: new Duration(seconds: 0),
+                                  fadeInDuration: new Duration(seconds: 0),
+                                ),
+                              ),
+                            )),
                         new GestureDetector(
                             onTap: () => Navigator.push(context,
                                     new MaterialPageRoute<void>(
@@ -472,23 +494,46 @@ class HomeTab extends StatelessWidget {
     );
   }
 
+  // 双击退出页面
+  Future<bool> _onWillPop() {
+    if (_first != 0 &&
+        new DateTime.now().millisecondsSinceEpoch - _first < 1500) {
+      return new Future<bool>.value(true);
+    } else {
+      _first = new DateTime.now().millisecondsSinceEpoch;
+      Fluttertoast.showToast(
+          msg: "再按一次退出lofter",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIos: 1,
+          gravity: ToastGravity.BOTTOM,
+          bgcolor: "#99000000",
+          textcolor: '#ffffff');
+      new Timer(new Duration(milliseconds: 1500), () {
+        _first = 0;
+      });
+      return new Future<bool>.value(false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new SafeArea(
-        child: new DefaultTabController(
-            length: 2,
-            child: new Scaffold(
-              appBar: new TabBar(
-                labelColor: Colors.black,
-                indicatorColor: Colors.black,
-                unselectedLabelColor: Colors.black,
-                tabs: <Widget>[new Tab(text: "关注"), new Tab(text: "订阅")],
-              ),
-              backgroundColor: Colors.white,
-              body: new TabBarView(children: <Widget>[
-                attentionListView(context),
-                subscriptionListView(context)
-              ]),
-            )));
+    return new WillPopScope(
+        onWillPop: () => _onWillPop(),
+        child: new SafeArea(
+            child: new DefaultTabController(
+                length: 2,
+                child: new Scaffold(
+                  appBar: new TabBar(
+                    labelColor: Colors.black,
+                    indicatorColor: Colors.black,
+                    unselectedLabelColor: Colors.black,
+                    tabs: <Widget>[new Tab(text: "关注"), new Tab(text: "订阅")],
+                  ),
+                  backgroundColor: Colors.white,
+                  body: new TabBarView(children: <Widget>[
+                    attentionListView(context),
+                    subscriptionListView(context)
+                  ]),
+                ))));
   }
 }

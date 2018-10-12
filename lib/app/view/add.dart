@@ -206,7 +206,9 @@ class AspectRatioVideoState extends State<AspectRatioVideo> {
     if (initialized) {
       final Size size = controller.value.size;
       return new AspectRatio(
-        aspectRatio: size.height / size.width,
+        aspectRatio: size.height > size.width
+            ? size.width / size.height
+            : size.height / size.width,
         child: new VideoPlayer(controller),
       );
     } else {

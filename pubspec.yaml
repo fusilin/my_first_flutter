@@ -33,6 +33,18 @@ dependencies:
   # 安卓配置：https://pub.flutter-io.cn/packages/image_cropper#-readme-tab-
 #  image_cropper: ^0.0.6
 
+  # 分享modal
+  share: ^0.5.3
+  # 富文本编译（运行没效果）
+  # flutter_markdown: ^0.2.0
+  # 二维码和条形码扫描
+  barcode_scan: ^0.0.7
+  # 缓存网络图片
+  cached_network_image: ^0.4.2
+  # 谷歌地图
+  # map_view: ^0.0.14
+  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

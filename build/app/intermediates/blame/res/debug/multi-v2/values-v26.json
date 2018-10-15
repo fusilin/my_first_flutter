@@ -4,7 +4,7 @@
             "outputFile": "/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-v26/values-v26.xml",
             "map": [
                 {
-                    "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/978c3ad13b4f4283804cd496a7d13ad0/res/values-v26/values-v26.xml",
+                    "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/96c1a3628cd2db5a702f6ac46780e88e/res/values-v26/values-v26.xml",
                     "from": {
                         "startLines": "2,6",
                         "startColumns": "4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/72f4528b321c84a02a7df5348dcb5298/res/values-v26/values-v26.xml",
+                    "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/values-v26/values-v26.xml",
                     "from": {
                         "startLines": "2,3,4,8,12,16",
                         "startColumns": "4,4,4,4,4,4",

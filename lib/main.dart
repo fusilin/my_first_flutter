@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lofter/config.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 void main() {
+  fluwx.register(appId: "wx75566e779930ff64");
   runApp(new MyApp());
 }
 

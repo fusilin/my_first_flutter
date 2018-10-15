@@ -41,8 +41,9 @@ dependencies:
   barcode_scan: ^0.0.7
   # 缓存网络图片
   cached_network_image: ^0.4.2
-  # 谷歌地图
-  # map_view: ^0.0.14
+  # 微信
+  flutter_wechat: ^0.1.5
+  fluwx: ^0.4.1
   
 
 dev_dependencies:

@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/image_picker/intermediates/res/merged/release/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/21109a6b88e78bccc25cdb90dca3e739/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/image_picker/intermediates/res/merged/release/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/21109a6b88e78bccc25cdb90dca3e739/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/image_picker/intermediates/res/merged/release/layout-v21/notification_action.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/21109a6b88e78bccc25cdb90dca3e739/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/image_picker/intermediates/res/merged/release/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/21109a6b88e78bccc25cdb90dca3e739/res/layout-v21/notification_template_custom_big.xml"
+    }
+]

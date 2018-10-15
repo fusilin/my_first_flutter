@@ -4,7 +4,7 @@
             "outputFile": "/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/72f4528b321c84a02a7df5348dcb5298/res/values-night-v8/values-night-v8.xml",
+                    "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/values-night-v8/values-night-v8.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8",
                         "startColumns": "4,4,4,4,4,4,4",

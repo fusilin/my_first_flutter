@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim-v21/design_bottom_sheet_slide_in.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/96c1a3628cd2db5a702f6ac46780e88e/res/anim-v21/design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim-v21/design_bottom_sheet_slide_out.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/96c1a3628cd2db5a702f6ac46780e88e/res/anim-v21/design_bottom_sheet_slide_out.xml"
+    }
+]

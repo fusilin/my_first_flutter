@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.myfirstflutter">
+          package="com.tfshopapp">
 
     <!-- The INTERNET permission is required for development. Specifically,
          flutter needs it to communicate with the running application
@@ -9,6 +9,12 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -40,6 +46,11 @@
             </intent-filter>
         </activity>
         <activity android:name="com.apptreesoftware.barcodescan.BarcodeScannerActivity"/>
+        <!-- <activity 
+        android:name=".wxapi.WXEntryActivity" 
+        android:exported="true" 
+        android:launchMode="singleTop"
+        /> -->
         <!--<activity-->
                 <!--android:name="com.yalantis.ucrop.UCropActivity"-->
                 <!--android:screenOrientation="portrait"-->

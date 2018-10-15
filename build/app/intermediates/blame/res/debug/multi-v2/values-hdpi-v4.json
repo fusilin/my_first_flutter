@@ -4,7 +4,7 @@
             "outputFile": "/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-hdpi-v4/values-hdpi-v4.xml",
             "map": [
                 {
-                    "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/core-1.9.8.aar/e80fb55ccbd58070a147d23f742571e5/res/values-hdpi-v4/values-hdpi-v4.xml",
+                    "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/core-1.9.8.aar/d69aa8145aa40fc6c84c4be13f2d3bf0/res/values-hdpi-v4/values-hdpi-v4.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/72f4528b321c84a02a7df5348dcb5298/res/values-hdpi-v4/values-hdpi-v4.xml",
+                    "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/values-hdpi-v4/values-hdpi-v4.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

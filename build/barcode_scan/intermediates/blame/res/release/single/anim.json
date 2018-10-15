@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/design_snackbar_in.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/96c1a3628cd2db5a702f6ac46780e88e/res/anim/design_snackbar_in.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_slide_out_bottom.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_tooltip_exit.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_tooltip_exit.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_slide_in_top.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_tooltip_enter.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_tooltip_enter.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_shrink_fade_out_from_bottom.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_grow_fade_in_from_bottom.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/design_bottom_sheet_slide_out.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/96c1a3628cd2db5a702f6ac46780e88e/res/anim/design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_slide_in_bottom.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_popup_exit.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_popup_exit.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/design_bottom_sheet_slide_in.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/96c1a3628cd2db5a702f6ac46780e88e/res/anim/design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_fade_in.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_popup_enter.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_popup_enter.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/design_snackbar_out.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/96c1a3628cd2db5a702f6ac46780e88e/res/anim/design_snackbar_out.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_fade_out.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_fade_out.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/anim/abc_slide_out_top.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/anim/abc_slide_out_top.xml"
+    }
+]

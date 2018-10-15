@@ -1,0 +1,94 @@
+[
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_secondary_text_material_dark.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_primary_text_material_light.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_background_cache_hint_selector_material_dark.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_tint_edittext.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/design_tint_password_toggle.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/96c1a3628cd2db5a702f6ac46780e88e/res/color/design_tint_password_toggle.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/design_error.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/design-27.1.1.aar/96c1a3628cd2db5a702f6ac46780e88e/res/color/design_error.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_tint_btn_checkable.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_search_url_text.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_search_url_text.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_dark.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_primary_text_disable_only_material_dark.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_hint_foreground_material_dark.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_hint_foreground_material_dark.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_tint_seek_thumb.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_primary_text_material_dark.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_tint_switch_track.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_btn_colored_text_material.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_hint_foreground_material_light.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_hint_foreground_material_light.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/switch_thumb_material_light.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_tint_spinner.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/switch_thumb_material_dark.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_primary_text_disable_only_material_light.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_tint_default.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_tint_default.xml"
+    },
+    {
+        "merged": "/Users/fusilin/Develop/my_first_flutter/build/barcode_scan/intermediates/res/merged/release/color/abc_secondary_text_material_light.xml",
+        "source": "/Users/fusilin/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/e4e46ec8983b82882cec3e7100682dbb/res/color/abc_secondary_text_material_light.xml"
+    }
+]

@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_wechat/flutter_wechat.dart';
+import 'package:fluwx/fluwx.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 
 class FindTab extends StatefulWidget {
   FindTabState createState() => new FindTabState();
 }
 
 class FindTabState extends State<FindTab> {
+  static const String _imgUrl =
+      'https://avatars2.githubusercontent.com/u/33337793?s=460&v=4';
+  static const String _webpageUrl =
+      'https://github.com/fusilin/my_first_flutter';
+  static const String _title = 'my_first_flutter';
+  static const String _description = 'github';
+  static const int _type = 0; // 0 聊天页面 1 朋友圈
   @override
   initState() {
     super.initState();
@@ -12,6 +22,27 @@ class FindTabState extends State<FindTab> {
 
   @override
   Widget build(BuildContext context) {
+    _share() async {
+      // await FlutterWechat.shareWebPage(
+      //   imgUrl: _imgUrl,
+      //   webpageUrl: _webpageUrl,
+      //   title: _title,
+      //   description: _description,
+      //   type: _type,
+      // );
+      // var model = new WeChatShareMiniProgramModel(
+      //     webPageUrl: _webpageUrl,
+      //     miniProgramType:
+      //         WeChatShareMiniProgramModel.MINI_PROGRAM_TYPE_RELEASE,
+      //     userName: _title,
+      //     title: _title,
+      //     description: _description,
+      //     thumbnail: _webpageUrl);
+      // fluwx.share(model);
+      fluwx.share(WeChatShareTextModel(
+          text: "text from fluwx", transaction: "transaction}", scene: WeChatScene.SESSION));
+    }
+
     return new Scaffold(
       appBar: new AppBar(
         elevation: 0.0,
@@ -34,7 +65,7 @@ class FindTabState extends State<FindTab> {
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () => _share(),
               child: const Icon(Icons.touch_app),
               heroTag: 'test2',
               tooltip: 'test2',

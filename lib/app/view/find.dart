@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_wechat/flutter_wechat.dart';
-import 'package:fluwx/fluwx.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:mfw/app/view/tab_bar_view.dart';
+import 'package:mfw/widget/route_animation.dart';
+import 'package:fluro/fluro.dart';
+import 'package:mfw/widget/app_bar.dart';
+// import 'dart:ui';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class FindTab extends StatefulWidget {
   FindTabState createState() => new FindTabState();
 }
 
 class FindTabState extends State<FindTab> {
-  static const String _imgUrl =
-      'https://avatars2.githubusercontent.com/u/33337793?s=460&v=4';
-  static const String _webpageUrl =
-      'https://github.com/fusilin/my_first_flutter';
-  static const String _title = 'my_first_flutter';
-  static const String _description = 'github';
-  static const int _type = 0; // 0 聊天页面 1 朋友圈
   @override
   initState() {
     super.initState();
@@ -22,39 +18,55 @@ class FindTabState extends State<FindTab> {
 
   @override
   Widget build(BuildContext context) {
-    _share() async {
-      // await FlutterWechat.shareWebPage(
-      //   imgUrl: _imgUrl,
-      //   webpageUrl: _webpageUrl,
-      //   title: _title,
-      //   description: _description,
-      //   type: _type,
-      // );
-      // var model = new WeChatShareMiniProgramModel(
-      //     webPageUrl: _webpageUrl,
-      //     miniProgramType:
-      //         WeChatShareMiniProgramModel.MINI_PROGRAM_TYPE_RELEASE,
-      //     userName: _title,
-      //     title: _title,
-      //     description: _description,
-      //     thumbnail: _webpageUrl);
-      // fluwx.share(model);
-      fluwx.share(WeChatShareTextModel(
-          text: "text from fluwx", transaction: "transaction}", scene: WeChatScene.SESSION));
-    }
-
     return new Scaffold(
-      appBar: new AppBar(
-        elevation: 0.0,
-        title: Text('发现', style: TextStyle(fontSize: 20.0)),
+      appBar: MyAppBar(
+        leading: <Widget>[
+          new InkWell(
+            onTap: () {
+              Fluttertoast.showToast(msg: 'left icon1');
+            },
+            child: new Padding(
+                padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                child: new Image.asset('assets/images/icon_setup.png',
+                    height: 22.0, width: 22.0)),
+          ),
+          new Padding(padding: EdgeInsets.only(right: 15.0)),
+          new InkWell(
+            onTap: () {
+              Fluttertoast.showToast(msg: 'left icon2');
+            },
+            child: new Padding(
+              padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+              child: new Image.asset('assets/images/icon_scavenging.png',
+                  height: 22.0, width: 22.0),
+            ),
+          )
+        ],
+        backgroundColor: new Color.fromARGB(255, 255, 230, 86),
+        title: '四阿哥',
+        actions: <Widget>[
+          new Padding(
+              padding: EdgeInsets.all(0.0),
+              child: new InkWell(
+                onTap: () {
+                  Fluttertoast.showToast(msg: 'right icon1');
+                },
+                child: new Padding(
+                  padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                  child: new Image.asset('assets/images/icon_message.png',
+                      height: 22.0, width: 22.0),
+                ),
+              ))
+        ],
       ),
-      backgroundColor: new Color.fromARGB(255, 242, 242, 245),
       // body: new Center(child: new InkWell()),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              final router = Router();
+            },
             child: new Text(
               '地图',
               style: TextStyle(color: Colors.green, fontSize: 14.0),
@@ -65,7 +77,16 @@ class FindTabState extends State<FindTab> {
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: FloatingActionButton(
-              onPressed: () => _share(),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    AnimationPageRoute(
+                        slideTween: Tween<Offset>(
+                            begin: Offset(1.0, 0.0), end: Offset.zero),
+                        builder: (c) {
+                          return TabBarViewSample();
+                        }));
+              },
               child: const Icon(Icons.touch_app),
               heroTag: 'test2',
               tooltip: 'test2',

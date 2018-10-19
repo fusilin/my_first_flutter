@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lofter/config.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:mfw/config.dart';
 
 void main() {
-  fluwx.register(appId: "wx75566e779930ff64");
   runApp(new MyApp());
 }
 
@@ -12,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
         title: 'lofter',
-        theme: new ThemeData(primaryColor: Colors.white),
+        theme: new ThemeData(primaryColor: Colors.black),
         home: LofterApp());
   }
 }

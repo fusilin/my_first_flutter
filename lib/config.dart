@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:lofter/app/view/home.dart';
-import 'package:lofter/app/view/find.dart';
-import 'package:lofter/app/view/add.dart';
-import 'package:lofter/app/view/message.dart';
-import 'package:lofter/app/view/mine.dart';
+import 'package:mfw/app/view/home.dart';
+import 'package:mfw/app/view/find.dart';
+import 'package:mfw/app/view/add.dart';
+import 'package:mfw/app/view/message.dart';
+import 'package:mfw/app/view/mine.dart';
 import 'package:flutter/services.dart';
 
 const double _TabTextSize = 11.0;
-Color _tabTextNormalColor = new Color(0xffDDDDDD);
-Color _tabTextActiveColor = new Color(0xff666666);
-Color _tabIconNormalColor = new Color(0xff999999);
-Color _tabIconActiveColor = new Color(0xff444444);
+Color _tabTextNormalColor = new Color(0xff666666);
+Color _tabTextActiveColor = new Color(0xff404346);
 
 class LofterApp extends StatefulWidget {
   @override
@@ -33,20 +31,32 @@ class HomeState extends State<LofterApp> {
     SystemChrome.setSystemUIOverlayStyle(uiStyle);
   }
 
-  var _bottomTitles = ["首页", "发现", "添加", "消息", "我的"];
+  var _bottomTitles = ["首页", "上海", "", "酒店", "我的"];
   var _tabImages;
   final tabTextStyleNormal =
       new TextStyle(color: _tabTextNormalColor, fontSize: _TabTextSize);
 
-  final tabTextStyleSelected =
-      new TextStyle(color: _tabTextActiveColor, fontSize: _TabTextSize);
+  final tabTextStyleSelected = new TextStyle(
+      color: _tabTextActiveColor,
+      fontSize: _TabTextSize,
+      fontWeight: FontWeight.w600);
   int _currentIndex = 0;
 
-  Icon getTabImage(path, isActive, index) {
-    print(path);
-    return new Icon(path,
-        color: isActive ?  _tabIconActiveColor: _tabIconNormalColor,
-        size: index == 2 ? 30.0 : 26.0);
+  Widget getTabImage(path, index) {
+    if (index == 2) {
+      return new Padding(
+          padding: const EdgeInsets.only(top: 5.0),
+          child: new Image.asset(
+            path,
+            width: 30.0,
+            height: 30.0,
+          ));
+    }
+    return new Image.asset(
+      path,
+      width: 24.0,
+      height: 24.0,
+    );
   }
 
   @override
@@ -56,32 +66,35 @@ class HomeState extends State<LofterApp> {
     super.initState();
     if (_tabImages == null) {
       _tabImages = [
-        [getTabImage(Icons.home, true, 0), getTabImage(Icons.home, false, 0)],
         [
-          getTabImage(Icons.supervisor_account, true, 1),
-          getTabImage(Icons.supervisor_account, false, 1)
+          getTabImage('assets/images/ic_tab_homepage_normal.png', 0),
+          getTabImage('assets/images/ic_tab_homepage_selected.png', 0),
         ],
         [
-          getTabImage(Icons.add_circle, true, 2),
-          getTabImage(Icons.add_circle, false, 2)
+          getTabImage('assets/images/ic_tab_destination_normal.png', 1),
+          getTabImage('assets/images/ic_tab_destination_selected.png', 1)
         ],
         [
-          getTabImage(Icons.notifications, true, 3),
-          getTabImage(Icons.notifications, false, 3)
+          getTabImage('assets/images/ic_tab_expand_normal.png', 2),
+          getTabImage('assets/images/ic_tab_expand_selected.png', 2)
         ],
         [
-          getTabImage(Icons.person, true, 4),
-          getTabImage(Icons.person, false, 4)
+          getTabImage('assets/images/ic_tab_hotel_normal.png', 3),
+          getTabImage('assets/images/ic_tab_hotel_selected.png', 3)
+        ],
+        [
+          getTabImage('assets/images/ic_tab_mine_normal.png', 4),
+          getTabImage('assets/images/ic_tab_mine_selected.png', 4)
         ]
       ];
     }
   }
 
-  Icon getTabIcon(int currentIndex) {
+  Widget getTabIcon(int currentIndex) {
     if (currentIndex == _currentIndex) {
-      return _tabImages[currentIndex][0];
+      return _tabImages[currentIndex][1];
     }
-    return _tabImages[currentIndex][1];
+    return _tabImages[currentIndex][0];
   }
 
   Text getTabTitle(int currentIndex) {
@@ -113,15 +126,25 @@ class HomeState extends State<LofterApp> {
           backgroundColor: Colors.white,
           items: <BottomNavigationBarItem>[
             new BottomNavigationBarItem(
-                icon: getTabIcon(0), title: getTabTitle(0)),
+                icon: getTabIcon(0),
+                activeIcon: getTabIcon(0),
+                title: getTabTitle(0)),
             new BottomNavigationBarItem(
-                icon: getTabIcon(1), title: getTabTitle(1)),
+                icon: getTabIcon(1),
+                activeIcon: getTabIcon(1),
+                title: getTabTitle(1)),
             new BottomNavigationBarItem(
-                icon: getTabIcon(2), title: new Text('')),
+                icon: getTabIcon(2),
+                activeIcon: getTabIcon(2),
+                title: new Text('')),
             new BottomNavigationBarItem(
-                icon: getTabIcon(3), title: getTabTitle(3)),
+                icon: getTabIcon(3),
+                activeIcon: getTabIcon(3),
+                title: getTabTitle(3)),
             new BottomNavigationBarItem(
-                icon: getTabIcon(4), title: getTabTitle(4)),
+                icon: getTabIcon(4),
+                activeIcon: getTabIcon(4),
+                title: getTabTitle(4)),
           ],
           currentIndex: _currentIndex,
           onTap: (index) {

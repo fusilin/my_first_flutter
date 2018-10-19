@@ -1,4 +1,0 @@
-#Tue Oct 16 09:58:54 CST 2018
-base.0=/Users/fusilin/Develop/my_first_flutter/build/app/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex

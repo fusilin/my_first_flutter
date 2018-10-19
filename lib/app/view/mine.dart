@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:lofter/app/view/search.dart';
+import 'package:mfw/app/view/search.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:mfw/widget/dividing_line.dart';
+import 'package:mfw/widget/divider_line.dart';
+import 'package:mfw/widget/route_animation.dart';
+import 'package:mfw/widget/fade_transition.dart';
+// import 'package:flutter_refresh/flutter_refresh.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lofter/widget/dividing_line.dart';
-import 'package:lofter/widget/divider_line.dart';
-import 'package:lofter/widget/route_animation.dart';
-import 'dart:async';
-import 'package:flutter_refresh/flutter_refresh.dart';
 
-class MineTab extends StatelessWidget {
+class MineTab extends StatefulWidget {
+  // const MineTab({Key key}) : super(key: key);
+  @override
+  _MineTabState createState() => new _MineTabState();
+}
+
+enum AppBarBehavior { normal, pinned, floating, snapping }
+
+class _MineTabState extends State<MineTab> {
   final List<Map<String, Object>> _items = [
     {'name': '设置', 'icon': 'assets/images/ic_my_set.png'},
     {'name': '交易记录', 'icon': 'assets/images/ic_my_set.png'},
@@ -17,12 +25,9 @@ class MineTab extends StatelessWidget {
     {'name': '在线客户', 'icon': 'assets/images/ic_my_set.png'},
   ];
 
-  Future<Null> onFooterRefresh() {
-    return new Future.delayed(new Duration(seconds: 2), () {});
-  }
-
-  Future<Null> onHeaderRefresh() {
-    return new Future.delayed(new Duration(seconds: 2), () {});
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -88,19 +93,80 @@ class MineTab extends StatelessWidget {
           ));
     }
 
+    List buildTest() {
+      List<Widget> _widget = [];
+      for (int i = 0; i < _items.length; i++) {
+        _widget.add(new GestureDetector(
+            onTap: () => Navigator.push(
+                context,
+                AnimationPageRoute(
+                    slideTween: Tween<Offset>(
+                        begin: Offset(1.0, 0.0), end: Offset.zero),
+                    builder: (c) {
+                      return Search();
+                    })),
+            child: new Container(
+                color: Colors.white,
+                child: buildContainer(_items[i]['icon'], _items[i]['name']))));
+        if (i < _items.length - 1) {
+          _widget.add(DividerLine(1.0, null, null, null));
+        }
+      }
+      return _widget;
+    }
+
     List buildItem(context) {
       List<Widget> _widget = [];
       _widget.add(
         new GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  AnimationPageRoute(
-                      slideTween: Tween<Offset>(
-                          begin: Offset(1.0, 0.0), end: Offset.zero),
-                      builder: (c) {
-                        return Search();
-                      }));
+              Navigator.of(context).push(new PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (BuildContext context, _, __) {
+                    return Search();
+                  },
+                  transitionsBuilder:
+                      (_, Animation<double> animation, __, Widget child) {
+                    return new FadeTransition(
+                      opacity: animation,
+                      child: new SlideTransition(
+                          position: new Tween<Offset>(
+                            begin: const Offset(0.0, 1.0),
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: child),
+                    );
+                  }));
+              // Navigator.of(context).push(new PageRouteBuilder(
+              //     opaque: false,
+              //     pageBuilder: (BuildContext context, _, __) {
+              //       return Search();
+              //     },
+              //     transitionsBuilder:
+              //         (_, Animation<double> animation, __, Widget child) {
+              //       return new FadeTransition(
+              //         opacity: animation,
+              //         child: new RotationTransition(
+              //           turns: new Tween<double>(begin: 0.5, end: 1.0)
+              //               .animate(animation),
+              //           child: child,
+              //         ),
+              //       );
+              //     }));
+              // Navigator.push(
+              //   context,
+              //   SlideRightRoute(widget: Search()),
+              // );
+              // Navigator.push(context, FadeTransiton(builder: (c) {
+              //   return Search();
+              // })
+              // AnimationPageRoute(
+              //     slideTween: Tween<Offset>(
+              //         begin: Offset(1.0, 0.0), end: Offset.zero),
+              //     builder: (c) {
+              //       return Search();
+              //     }),
+              // );
             },
             child: new Container(
               decoration: new BoxDecoration(
@@ -189,21 +255,113 @@ class MineTab extends StatelessWidget {
       return _widget;
     }
 
-    return new SafeArea(
-      child: Scaffold(
-          backgroundColor: new Color.fromARGB(255, 242, 242, 245),
-          body: new Refresh(
-            onHeaderRefresh: onHeaderRefresh,
-            childBuilder: (BuildContext context,
-                {ScrollController controller, ScrollPhysics physics}) {
-              return new Container(
-                  child: new ListView(
-                physics: physics,
-                controller: controller,
-                children: buildItem(context),
-              ));
-            },
-          )),
-    );
+    AppBarBehavior _appBarBehavior = AppBarBehavior.pinned;
+    final double _appBarHeight = 180.0;
+
+    return Scaffold(
+        // appBar: new AppBar(
+        //   title: Text(
+        //     '我的',
+        //     style: TextStyle(
+        //         fontSize: 14.0, color: new Color.fromARGB(255, 67, 67, 67)),
+        //   ),
+        //   elevation: 0.0,
+        //   backgroundColor: new Color.fromARGB(255, 255, 230, 86),
+        // ),
+        backgroundColor: new Color.fromARGB(255, 242, 242, 245),
+        // body: new Container(
+        //     child: new ListView(
+        //   children: buildItem(context),
+        // )),
+        body: new CustomScrollView(
+          slivers: <Widget>[
+            new SliverAppBar(
+              expandedHeight: _appBarHeight,
+              actions: <Widget>[
+                new IconButton(
+                  icon: const Icon(Icons.create),
+                  tooltip: 'Edit',
+                  onPressed: () {
+                    Fluttertoast.showToast(msg: '测试');
+                  },
+                )
+              ],
+              flexibleSpace: new FlexibleSpaceBar(
+                title: const Text('四阿哥哈哈哈'),
+                background: new Stack(fit: StackFit.expand, children: <Widget>[
+                  new GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(new PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) {
+                              return Search();
+                            },
+                            transitionsBuilder: (_, Animation<double> animation,
+                                __, Widget child) {
+                              return new FadeTransition(
+                                opacity: animation,
+                                child: new SlideTransition(
+                                    position: new Tween<Offset>(
+                                      begin: const Offset(0.0, 1.0),
+                                      end: Offset.zero,
+                                    ).animate(animation),
+                                    child: child),
+                              );
+                            }));
+                      },
+                      child: new Container(
+                        decoration: new BoxDecoration(
+                          image: new DecorationImage(
+                              image: new AssetImage("assets/images/v.jpg"),
+                              fit: BoxFit.fitWidth),
+                        ),
+                        child: new Container(
+                          padding: const EdgeInsets.only(
+                              top: 30.0, bottom: 30.0, left: 15.0, right: 15.0),
+                          color: const Color.fromARGB(200, 242, 242, 245),
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  new CircleAvatar(
+                                    radius: 40.0,
+                                    backgroundImage: new NetworkImage(
+                                        "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
+                                  ),
+                                  new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      buildPadding("四阿哥", Colors.black, 16.0),
+                                      buildPadding(
+                                          "Lv.2", Color(0xff666666), 12.0)
+                                    ],
+                                  )
+                                ],
+                              ),
+                              new Icon(
+                                Icons.chevron_right,
+                                size: 22.0,
+                                color: const Color(0xfff4f4f8),
+                              )
+                            ],
+                          ),
+                        ),
+                      )),
+                ]),
+              ),
+            ),
+            new SliverList(
+              delegate: new SliverChildListDelegate(<Widget>[
+                // ,
+              ]),
+            ),
+          ],
+        ));
   }
 }

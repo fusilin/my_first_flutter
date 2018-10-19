@@ -1,3 +1,0 @@
-com.jarvan.fluwx
-string app_name
-style DisablePreviewTheme

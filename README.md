@@ -1,6 +1,6 @@
 # my_first_flutter
 
-模仿Lofter开发的一款app
+模仿马蜂窝开发的一款app
 
 ## Getting Started
 

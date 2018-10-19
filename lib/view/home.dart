@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mfw/app/view/search.dart';
+import 'package:mfw/view/search.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:ui';
 

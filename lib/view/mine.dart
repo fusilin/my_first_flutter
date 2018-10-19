@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mfw/app/view/search.dart';
+import 'package:mfw/view/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mfw/widget/dividing_line.dart';
 import 'package:mfw/widget/divider_line.dart';

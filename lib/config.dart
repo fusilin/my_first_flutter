@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mfw/app/view/home.dart';
-import 'package:mfw/app/view/find.dart';
-import 'package:mfw/app/view/add.dart';
-import 'package:mfw/app/view/message.dart';
-import 'package:mfw/app/view/mine.dart';
+import 'package:mfw/view/home.dart';
+import 'package:mfw/view/find/find.dart';
+import 'package:mfw/view/add.dart';
+import 'package:mfw/view/message.dart';
+import 'package:mfw/view/mine.dart';
 import 'package:flutter/services.dart';
 
 const double _TabTextSize = 11.0;

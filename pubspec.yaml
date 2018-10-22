@@ -83,6 +83,9 @@ flutter:
   - assets/images/icon_setup.png
   - assets/images/icon_scavenging.png
   - assets/images/icon_message.png
+  - assets/images/icon_hotel_collect.png
+  - assets/images/icon_hotel_order.png
+  - assets/images/icon_time_s.png
 
 
   - assets/images/ic_default._head.png

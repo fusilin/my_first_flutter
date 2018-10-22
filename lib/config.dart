@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mfw/view/home.dart';
-import 'package:mfw/view/find/find.dart';
-import 'package:mfw/view/add.dart';
-import 'package:mfw/view/message.dart';
-import 'package:mfw/view/mine.dart';
+import 'package:mfw/view/app/home.dart';
+import 'package:mfw/view/app/search.dart';
+import 'package:mfw/view/app/add.dart';
+import 'package:mfw/view/app/message.dart';
+import 'package:mfw/view/app/mine.dart';
 import 'package:flutter/services.dart';
 
 const double _TabTextSize = 11.0;
@@ -115,7 +115,7 @@ class HomeState extends State<LofterApp> {
         body: new IndexedStack(
           children: <Widget>[
             new HomeTab(),
-            new FindTab(),
+            new Search(),
             new AddTab(),
             new MessageTab(),
             new MineTab()

@@ -3,11 +3,13 @@ import 'package:mfw/widget/app_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:mfw/view/model.dart';
-import 'package:mfw/view/mine/find.dart';
-import 'package:mfw/widget/dividing_line.dart';
-import 'package:mfw/widget/divider_line.dart';
+import 'package:mfw/view/mine/home_page.dart';
 import 'package:mfw/widget/route_animation.dart';
 import 'dart:ui';
+import 'package:mfw/widget/text.dart';
+import 'package:mfw/view/mine/barcode_scan.dart';
+import 'package:mfw/view/mine/setting.dart';
+import 'package:mfw/view/mine/message.dart';
 import 'package:mfw/view/mine/history.dart';
 
 class MineTab extends StatefulWidget {
@@ -17,23 +19,15 @@ class MineTab extends StatefulWidget {
 class _MineTabState extends State<MineTab> {
   ScrollController _mScrollController = new ScrollController();
   bool _isNeedSetAlpha = false;
-  final List<Map<String, Object>> _items = [
-    {'name': '设置', 'icon': 'assets/images/ic_my_set.png'},
-    {'name': '交易记录', 'icon': 'assets/images/ic_my_set.png'},
-    {'name': '认证达人', 'icon': 'assets/images/ic_my_set.png'},
-    {'name': '我的应用', 'icon': 'assets/images/ic_my_set.png'},
-    {'name': '在线客户', 'icon': 'assets/images/ic_my_set.png'},
-  ];
-
   void initState() {
     _mScrollController.addListener(() {
       if (_mScrollController.offset < 80.0) {
         _isNeedSetAlpha = true;
-        ScopedModel.of<CountModel>(context).changeTitleOpacity(
+        ScopedModel.of<GlobalModel>(context).changeTitleOpacity(
             ((_mScrollController.offset / 80) * 255).toInt());
       } else {
         if (_isNeedSetAlpha) {
-          ScopedModel.of<CountModel>(context).changeTitleOpacity(255);
+          ScopedModel.of<GlobalModel>(context).changeTitleOpacity(255);
           _isNeedSetAlpha = false;
         }
       }
@@ -66,68 +60,14 @@ class _MineTabState extends State<MineTab> {
         ));
   }
 
-  Row buildListColumn(String url, String label) {
-    return new Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            new Image.asset(url, width: 20.0, height: 20.0),
-            new Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: new Text(label, style: new TextStyle(fontSize: 13.0))),
-          ],
-        ),
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            new Icon(Icons.chevron_right,
-                size: 22.0, color: const Color(0xff999999))
-          ],
-        )
-      ],
-    );
-  }
-
-  Container buildContainer(String url, String label) {
-    return new Container(
-        padding: const EdgeInsets.only(
-            top: 12.0, bottom: 12.0, left: 15.0, right: 15.0),
-        color: Colors.white,
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[buildListColumn(url, label)],
-        ));
-  }
-
   List buildItem(context) {
     List<Widget> _widget = [];
-
     _widget.add(
       new GestureDetector(
           onTap: () {
-            Navigator.of(context).push(new PageRouteBuilder(
-                opaque: false,
-                pageBuilder: (BuildContext context, _, __) {
-                  return Find();
-                },
-                transitionsBuilder:
-                    (_, Animation<double> animation, __, Widget child) {
-                  return new FadeTransition(
-                    opacity: animation,
-                    child: new SlideTransition(
-                        position: new Tween<Offset>(
-                          begin: const Offset(0.0, 1.0),
-                          end: Offset.zero,
-                        ).animate(animation),
-                        child: child),
-                  );
-                }));
+            Navigator.push(context, AnimationPageRoute(builder: (c) {
+              return HomePage();
+            }));
           },
           child: new Container(
             padding: const EdgeInsets.only(
@@ -174,14 +114,9 @@ class _MineTabState extends State<MineTab> {
           )),
     );
     _widget.add(new GestureDetector(
-        onTap: () => Navigator.push(
-            context,
-            AnimationPageRoute(
-                slideTween:
-                    Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset.zero),
-                builder: (c) {
-                  return Find();
-                })),
+        onTap: () => Navigator.push(context, AnimationPageRoute(builder: (c) {
+              return HomePage();
+            })),
         child: new Container(
             padding: const EdgeInsets.only(right: 15.0),
             color: new Color.fromARGB(255, 250, 220, 76),
@@ -196,41 +131,26 @@ class _MineTabState extends State<MineTab> {
                       // crossAxisAlignment: CrossAxisAlignment.baseline,
                       children: <Widget>[
                         buildColumn(
-                            () => Navigator.push(
-                                context,
-                                AnimationPageRoute(
-                                    slideTween: Tween<Offset>(
-                                        begin: Offset(1.0, 0.0),
-                                        end: Offset.zero),
-                                    builder: (c) {
-                                      return Find();
-                                    })),
+                            () => Navigator.push(context,
+                                    AnimationPageRoute(builder: (c) {
+                                  return HomePage();
+                                })),
                             new Text('6', style: new TextStyle(fontSize: 14.0)),
                             '关注',
                             13.0),
                         buildColumn(
-                            () => Navigator.push(
-                                context,
-                                AnimationPageRoute(
-                                    slideTween: Tween<Offset>(
-                                        begin: Offset(1.0, 0.0),
-                                        end: Offset.zero),
-                                    builder: (c) {
-                                      return Find();
-                                    })),
+                            () => Navigator.push(context,
+                                    AnimationPageRoute(builder: (c) {
+                                  return HomePage();
+                                })),
                             new Text('0', style: new TextStyle(fontSize: 14.0)),
                             '粉丝',
                             13.0),
                         buildColumn(
-                            () => Navigator.push(
-                                context,
-                                AnimationPageRoute(
-                                    slideTween: Tween<Offset>(
-                                        begin: Offset(1.0, 0.0),
-                                        end: Offset.zero),
-                                    builder: (c) {
-                                      return Find();
-                                    })),
+                            () => Navigator.push(context,
+                                    AnimationPageRoute(builder: (c) {
+                                  return HomePage();
+                                })),
                             new Text('0', style: new TextStyle(fontSize: 14.0)),
                             '访客',
                             13.0)
@@ -289,41 +209,29 @@ class _MineTabState extends State<MineTab> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 buildColumn(
-                    () => Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            slideTween: Tween<Offset>(
-                                begin: Offset(1.0, 0.0), end: Offset.zero),
-                            builder: (c) {
-                              return Find();
-                            })),
-                    new Image.asset('assets/images/icon_hotel_collect.png',
+                    () => Navigator.push(context,
+                            AnimationPageRoute(builder: (c) {
+                          return HomePage();
+                        })),
+                    new Image.asset('assets/images/mine_icon_collection.png',
                         height: 22.0, width: 22.0),
                     '我的收藏',
                     13.0),
                 buildColumn(
-                    () => Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            slideTween: Tween<Offset>(
-                                begin: Offset(1.0, 0.0), end: Offset.zero),
-                            builder: (c) {
-                              return Find();
-                            })),
-                    new Image.asset('assets/images/icon_hotel_order.png',
+                    () => Navigator.push(context,
+                            AnimationPageRoute(builder: (c) {
+                          return HomePage();
+                        })),
+                    new Image.asset('assets/images/mine_icon_order.png',
                         height: 22.0, width: 22.0),
                     '我的订单',
                     13.0),
                 buildColumn(
-                    () => Navigator.push(
-                        context,
-                        AnimationPageRoute(
-                            slideTween: Tween<Offset>(
-                                begin: Offset(1.0, 0.0), end: Offset.zero),
-                            builder: (c) {
-                              return History();
-                            })),
-                    new Image.asset('assets/images/icon_time_s.png',
+                    () => Navigator.push(context,
+                            AnimationPageRoute(builder: (c) {
+                          return HomePage();
+                        })),
+                    new Image.asset('assets/images/mine_icon_history.png',
                         height: 22.0, width: 22.0),
                     '我的历史',
                     13.0),
@@ -335,26 +243,78 @@ class _MineTabState extends State<MineTab> {
     ));
 
     _widget.add(new GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          AnimationPageRoute(
-              slideTween:
-                  Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset.zero),
-              builder: (c) {
-                return Find();
-              })),
+      onTap: () => Navigator.push(context, AnimationPageRoute(builder: (c) {
+            return HomePage();
+          })),
       child: new Container(
-        height: 180.0,
         margin: const EdgeInsets.only(left: 15.0, right: 15.0, top: 8.0),
         width: window.physicalSize.width,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(const Radius.circular(7.0)),
         ),
-        child: new Row(
+        child: new Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[],
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Padding(
+              padding: const EdgeInsets.only(
+                  top: 15.0, bottom: 15.0, left: 10.0, right: 10.0),
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  MText(
+                      title: '我的旅行',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16.0),
+                  new Icon(
+                    Icons.chevron_right,
+                    size: 18.0,
+                    color: const Color(0xff000000),
+                  )
+                ],
+              ),
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new Expanded(flex: 1, child: new Text('')),
+                new Expanded(
+                  flex: 3,
+                  child: new Container(
+                    height: 48.0,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 255, 230, 86),
+                      borderRadius:
+                          BorderRadius.all(const Radius.circular(25.0)),
+                    ),
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Image.asset('assets/images/mine_icon_camera.png',
+                            width: 20.0, height: 20.0),
+                        MText(
+                            title: '记录你的旅行',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0),
+                      ],
+                    ),
+                  ),
+                ),
+                new Expanded(flex: 1, child: new Text('')),
+              ],
+            ),
+            new Padding(
+              padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+              child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    MText(
+                        title: '去看看有趣的世界吧', fontSize: 14.0, color: Colors.blue),
+                  ]),
+            ),
+          ],
         ),
       ),
     ));
@@ -363,14 +323,16 @@ class _MineTabState extends State<MineTab> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<CountModel>(builder: (context, child, model) {
+    return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
       return new Scaffold(
         backgroundColor: new Color.fromARGB(255, 242, 242, 245),
         appBar: MyAppBar(
           leading: <Widget>[
             new InkWell(
               onTap: () {
-                Fluttertoast.showToast(msg: 'left icon1');
+                Navigator.push(context, AnimationPageRoute(builder: (c) {
+                  return Setting();
+                }));
               },
               child: new Padding(
                   padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
@@ -380,7 +342,9 @@ class _MineTabState extends State<MineTab> {
             new Padding(padding: EdgeInsets.only(right: 15.0)),
             new InkWell(
               onTap: () {
-                Fluttertoast.showToast(msg: 'left icon2');
+                Navigator.push(context, AnimationPageRoute(builder: (c) {
+                  return BarcodeScan();
+                }));
               },
               child: new Padding(
                 padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
@@ -397,7 +361,9 @@ class _MineTabState extends State<MineTab> {
                 padding: EdgeInsets.all(0.0),
                 child: new InkWell(
                   onTap: () {
-                    Fluttertoast.showToast(msg: 'right icon1');
+                    Navigator.push(context, AnimationPageRoute(builder: (c) {
+                      return Message();
+                    }));
                   },
                   child: new Padding(
                     padding: EdgeInsets.only(top: 12.0, bottom: 12.0),

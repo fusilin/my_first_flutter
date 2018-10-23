@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:mfw/view/model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomTitleBarController extends ValueNotifier<ContomTitleAlphaValue> {
   CustomTitleBarController() : super(new ContomTitleAlphaValue());
@@ -60,10 +61,17 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class MyAppBarState extends State<MyAppBar> {
-  final double _paddingTop = MediaQueryData.fromWindow(window).padding.top;
+  @override
+  void initState() {
+    ScopedModel.of<GlobalModel>(context).changeOpacity(0);
+    ScopedModel.of<GlobalModel>(context).changeTitleOpacity(0);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<CountModel>(builder: (context, child, model) {
+    final double _paddingTop = MediaQuery.of(context).padding.top;
+    return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
       return new Container(
         padding: EdgeInsets.only(top: _paddingTop, left: 15.0, right: 15.0),
         height: (widget.height ?? 48.0) + _paddingTop,
@@ -81,7 +89,8 @@ class MyAppBarState extends State<MyAppBar> {
               child: new Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  children: widget.leading),
+                  children:
+                      widget.leading != null ? widget.leading : <Widget>[]),
             ),
             new Expanded(
                 flex: widget.cFlex ?? 2,
@@ -104,7 +113,8 @@ class MyAppBarState extends State<MyAppBar> {
                 flex: widget.rFlex ?? 1,
                 child: new Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: widget.actions,
+                  children:
+                      widget.actions != null ? widget.actions : <Widget>[],
                 ))
           ],
         ),

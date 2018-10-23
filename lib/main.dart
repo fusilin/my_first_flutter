@@ -8,15 +8,15 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  CountModel countModel = CountModel();
+  GlobalModel countModel = GlobalModel();
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<CountModel>(
+    return ScopedModel<GlobalModel>(
         model: countModel,
         child: new MaterialApp(
             title: '马蜂窝旅游',
             theme: new ThemeData(primaryColor: Colors.black),
-            home: LofterApp()));
+            home: Config()));
   }
 }

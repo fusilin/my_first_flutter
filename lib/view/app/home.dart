@@ -503,7 +503,7 @@ class HomeTab extends StatelessWidget {
     } else {
       _first = new DateTime.now().millisecondsSinceEpoch;
       Fluttertoast.showToast(
-          msg: "再按一次退出lofter",
+          msg: "再按一次退出应用",
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIos: 1,
           gravity: ToastGravity.BOTTOM,

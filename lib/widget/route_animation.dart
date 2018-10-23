@@ -36,11 +36,12 @@ class AnimationPageRoute<T> extends MaterialPageRoute<T> {
       slideTween = new Tween<Offset>(
         begin: new Offset(1.0, 0.0),
         end: Offset.zero,
+        // end: const Offset(0.0, 0.0),
       );
     }
 
-    return slideTween.animate(
-        new CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn));
+    return slideTween
+        .animate(new CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn));
   }
 
   Animation<double> _getFadeAnimation(Animation<double> animation) {
@@ -52,6 +53,6 @@ class AnimationPageRoute<T> extends MaterialPageRoute<T> {
     }
 
     return fadeTween
-        .animate(new CurvedAnimation(parent: animation, curve: Curves.easeIn));
+        .animate(new CurvedAnimation(parent: animation, curve: Curves.linear));
   }
 }

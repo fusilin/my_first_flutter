@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mfw/widget/app_bar.dart';
+import 'package:mfw/components/app_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:mfw/view/model.dart';
+import 'package:mfw/model/model.dart';
 import 'package:mfw/view/mine/home_page.dart';
-import 'package:mfw/widget/route_animation.dart';
+import 'package:mfw/components/route_animation.dart';
 import 'dart:ui';
-import 'package:mfw/widget/text.dart';
+import 'package:mfw/components/text.dart';
 import 'package:mfw/view/mine/barcode_scan.dart';
 import 'package:mfw/view/mine/setting.dart';
 import 'package:mfw/view/mine/message.dart';
@@ -337,7 +337,7 @@ class _MineTabState extends State<MineTab> {
               child: new Padding(
                   padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
                   child: new Image.asset('assets/images/icon_setup.png',
-                      height: 22.0, width: 22.0)),
+                      height: 24.0, width: 24.0)),
             ),
             new Padding(padding: EdgeInsets.only(right: 15.0)),
             new InkWell(
@@ -349,7 +349,7 @@ class _MineTabState extends State<MineTab> {
               child: new Padding(
                 padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
                 child: new Image.asset('assets/images/icon_scavenging.png',
-                    height: 22.0, width: 22.0),
+                    height: 24.0, width: 24.0),
               ),
             )
           ],
@@ -368,7 +368,7 @@ class _MineTabState extends State<MineTab> {
                   child: new Padding(
                     padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
                     child: new Image.asset('assets/images/icon_message.png',
-                        height: 22.0, width: 22.0),
+                        height: 24.0, width: 24.0),
                   ),
                 ))
           ],

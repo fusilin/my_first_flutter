@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mfw/config.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:mfw/view/model.dart';
+import 'package:mfw/model/model.dart';
 
 void main() {
   runApp(new MyApp());

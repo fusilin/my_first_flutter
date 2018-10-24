@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mfw/widget/app_bar.dart';
-import 'package:mfw/widget/text.dart';
+import 'package:mfw/components/app_bar.dart';
+import 'package:mfw/components/text.dart';
 
 class Message extends StatelessWidget {
   @override

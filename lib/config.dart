@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:mfw/app.dart';
 import 'dart:async';
-import 'package:mfw/widget/route_animation.dart';
+import 'package:mfw/components/route_animation.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:mfw/view/model.dart';
+import 'package:mfw/model/model.dart';
 import 'dart:ui';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -34,15 +34,20 @@ class _ConfigState extends State<Config> {
     super.initState();
     // 沉浸式
     appUIStyle();
-    // double _w = MediaQuery.of(context).size.width;
-    // Fluttertoast.showToast(msg: '$_w');
-    // // ScopedModel.of<GlobalModel>(context)
-    // //     .getDeviceWidth(_w);
     new Timer(new Duration(milliseconds: 1500), () {
       Navigator.pushAndRemoveUntil(context, AnimationPageRoute(builder: (c) {
         return MfwApp();
       }), (route) => route == null);
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    ScopedModel.of<GlobalModel>(context)
+        .getStatusHeight(MediaQuery.of(context).padding.top);
+    ScopedModel.of<GlobalModel>(context)
+        .getDeviceWidth(MediaQuery.of(context).size.width);
+    super.didChangeDependencies();
   }
 
   @override

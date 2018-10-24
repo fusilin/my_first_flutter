@@ -6,8 +6,8 @@ import 'dart:ui';
 
 import 'dart:async';
 import 'package:flutter_refresh/flutter_refresh.dart';
-import 'package:mfw/widget/dividing_line.dart';
-import 'package:mfw/widget/divider_line.dart';
+import 'package:mfw/components/dividing_line.dart';
+import 'package:mfw/components/white_space.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 const double _kMinFlingVelocity = 800.0;
@@ -269,7 +269,6 @@ class HomeTab extends StatelessWidget {
                         new GestureDetector(
                             onTap: () {
                               Navigator.push(context,
-                              
                                   new MaterialPageRoute<void>(
                                       builder: (BuildContext context) {
                                 return new Search();
@@ -417,11 +416,10 @@ class HomeTab extends StatelessWidget {
                                                 children: <Widget>[
                                                   buildModalItem(_context,
                                                       '复制链接', '复制功能待完善'),
-                                                  DividerLine(
-                                                      1.0, 0.0, null, null),
+                                                  DividingLine(),
                                                   buildModalItem(_context,
                                                       '屏蔽相关标签', '屏蔽待完善'),
-                                                  DividingLine(null, 5.0),
+                                                  WhiteSpace(5.0, null),
                                                   buildModalItem(
                                                       _context, '取消', ''),
                                                 ],
@@ -451,7 +449,7 @@ class HomeTab extends StatelessWidget {
                                         fontSize: 12.0)),
                               ],
                             )),
-                        DividingLine(null, null),
+                        WhiteSpace(null, null),
                       ],
                     ),
                   );

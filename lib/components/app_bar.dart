@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:mfw/view/model.dart';
+import 'package:mfw/model/model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomTitleBarController extends ValueNotifier<ContomTitleAlphaValue> {
@@ -70,11 +70,11 @@ class MyAppBarState extends State<MyAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    final double _paddingTop = MediaQuery.of(context).padding.top;
     return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
       return new Container(
-        padding: EdgeInsets.only(top: _paddingTop, left: 15.0, right: 15.0),
-        height: (widget.height ?? 48.0) + _paddingTop,
+        padding:
+            EdgeInsets.only(top: model.statusHeight, left: 15.0, right: 15.0),
+        height: (widget.height ?? 48.0) + model.statusHeight,
         color: widget.isHeaderGradient == true
             ? new Color.fromARGB(model.opacity, widget.rBColor ?? 250,
                 widget.gBColor ?? 220, widget.bBColor ?? 76)

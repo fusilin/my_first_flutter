@@ -8,6 +8,7 @@ import 'package:mfw/components/label.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:mfw/model/model.dart';
 import 'dart:ui';
+import 'package:flutter/services.dart';
 
 import 'package:mfw/view/mine/widget/home_page.dart';
 
@@ -19,13 +20,15 @@ class _HomePageState extends State<HomePage> {
   Color _color = Colors.white;
   ScrollController _mScrollController = new ScrollController();
   bool _isNeedSetAlpha = false;
-  
+
   final List<Map<String, Object>> _items = [
     {'title': '今天访问', 'num': '0'},
     {'title': '累计访问', 'num': '0'}
   ];
 
   void initState() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark
+        .copyWith(statusBarIconBrightness: Brightness.dark));
     _mScrollController.addListener(() {
       if (_mScrollController.offset < 250.0) {
         _isNeedSetAlpha = true;

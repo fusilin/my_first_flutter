@@ -5,6 +5,7 @@ import 'package:mfw/view/app/search.dart';
 import 'package:mfw/view/app/add.dart';
 import 'package:mfw/view/app/message.dart';
 import 'package:mfw/view/app/mine.dart';
+import 'package:flutter/services.dart';
 
 const double _TabTextSize = 11.0;
 Color _tabTextNormalColor = new Color(0xff666666);
@@ -46,6 +47,8 @@ class _MfwAppState extends State<MfwApp> {
 
   @override
   void initState() {
+    // 非全屏
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     super.initState();
     if (_tabImages == null) {
       _tabImages = [
@@ -132,6 +135,13 @@ class _MfwAppState extends State<MfwApp> {
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
+              if (index == 0 || index == 2 || index == 4) {
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark
+                    .copyWith(statusBarIconBrightness: Brightness.dark));
+              } else {
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
+                    .copyWith(statusBarIconBrightness: Brightness.light));
+              }
               _currentIndex = index;
             });
           },

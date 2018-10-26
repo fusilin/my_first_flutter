@@ -8,6 +8,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:mfw/model/model.dart';
 import 'dart:ui';
 import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:splashscreen/splashscreen.dart';
 
 class Config extends StatefulWidget {
   @override
@@ -52,6 +53,13 @@ class _ConfigState extends State<Config> {
 
   @override
   Widget build(BuildContext context) {
+    // return new SplashScreen(
+    //   seconds: 3,
+    //   navigateAfterSeconds: new MfwApp(),
+    //   // title: new Text('Welcome In SplashScreen'),
+    //   image: new Image.asset('assets/images/screen.png'),
+    //   backgroundColor: Colors.blue,
+    // );
     return new Scaffold(
         body: new Center(
       child: new Text('欢迎页, 等待完善'),

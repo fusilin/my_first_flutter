@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mfw/config.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:mfw/model/model.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  // 全屏
+  SystemChrome.setEnabledSystemUIOverlays([]);
   runApp(new MyApp());
 }
 

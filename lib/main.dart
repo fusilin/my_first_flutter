@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 
 void main() {
   // 全屏
-  SystemChrome.setEnabledSystemUIOverlays([]);
+  // SystemChrome.setEnabledSystemUIOverlays([]);
   runApp(new MyApp());
 }
 

@@ -9,6 +9,7 @@ import 'package:flutter_refresh/flutter_refresh.dart';
 import 'package:mfw/components/dividing_line.dart';
 import 'package:mfw/components/white_space.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import "package:pull_to_refresh/pull_to_refresh.dart";
 
 const double _kMinFlingVelocity = 800.0;
 
@@ -118,14 +119,72 @@ class _GridPhotoViewerState extends State<GridPhotoViewer>
   }
 }
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
+  _HomeTab createState() => new _HomeTab();
+}
+
+class _HomeTab extends State<HomeTab> {
   // List<Photo> photos = <Photo>[
   //   new Photo(
   //       assetName:
   //           'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2097455549,1668468150&fm=27&gp=0.jpg')
   // ];
 
+  ValueNotifier<double> topOffsetLis = new ValueNotifier(0.0);
+  ValueNotifier<double> bottomOffsetLis = new ValueNotifier(0.0);
   int _first = 0;
+  RefreshController _refreshController;
+  List<Widget> data = [];
+  void _getDatas() {
+    for (int i = 0; i < 14; i++) {
+      data.add(new Container(
+        color: new Color.fromARGB(255, 250, 250, 250),
+        child: new Card(
+          margin: new EdgeInsets.only(
+              left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
+          child: new Center(
+            child: new Text('Data $i'),
+          ),
+        ),
+      ));
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getDatas();
+    _refreshController = new RefreshController();
+    topOffsetLis.addListener(() {
+      setState(() {});
+    });
+    bottomOffsetLis.addListener(() {
+      setState(() {});
+    });
+  }
+
+  Widget _buildHeader(context, mode) {
+    return new ClassicIndicator(
+      mode: mode,
+      idleText: '下拉刷新',
+      releaseText: '释放刷新',
+      refreshingText: '正在刷新',
+      completeText: '刷新成功',
+    );
+  }
+
+  Widget _buildFooter(context, mode) {
+    return new ClassicIndicator(mode: mode);
+  }
+
+  void _onOffsetCallback(bool isUp, double offset) {
+    // if you want change some widgets state ,you should rewrite the callback
+    if (isUp) {
+      topOffsetLis.value = offset;
+    } else {
+      bottomOffsetLis.value = offset;
+    }
+  }
 
   Future<Null> onFooterRefresh() {
     return new Future.delayed(new Duration(seconds: 2), () {});
@@ -248,214 +307,215 @@ class HomeTab extends StatelessWidget {
   }
 
   Widget attentionListView(context) {
-    return new Refresh(
-      onFooterRefresh: onFooterRefresh,
-      onHeaderRefresh: onHeaderRefresh,
-      childBuilder: (BuildContext context,
-          {ScrollController controller, ScrollPhysics physics}) {
-        return new Container(
-            child: new ListView.builder(
-                physics: physics,
-                controller: controller,
-                itemCount: _items.length,
-                itemBuilder: (context, i) {
-                  return Container(
-                    padding: const EdgeInsets.only(),
-                    color: Colors.white,
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        new GestureDetector(
-                            onTap: () {
-                              Navigator.push(context,
-                                  new MaterialPageRoute<void>(
-                                      builder: (BuildContext context) {
-                                return new Search();
-                              }));
-                            },
-                            child: new Container(
-                              padding: const EdgeInsets.only(
-                                  top: 10.0, bottom: 10.0, left: 15.0),
-                              color: Colors.white,
-                              child: new Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  new CircleAvatar(
-                                    radius: 25.0,
-                                    backgroundImage:
-                                        new NetworkImage(_items[i]['headImg']),
-                                  ),
-                                  new Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      buildPadding(_items[i]['name'])
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )),
-                        new GestureDetector(
-                            onTap: () =>
-                                showPhoto(context, _items[i]['contentImg']),
-                            child: new Container(
-                              color: Colors.white,
-                              padding: const EdgeInsets.all(0.0),
-                              width: window.physicalSize.width,
-                              // child: new Image.asset(),
-                              // child: new Image.asset(_items[i]['contentImg'],
-                              child: new SizedBox(
-                                width: MediaQuery.of(context)
-                                    .size
-                                    .width
-                                    .toDouble(),
-                                child: new CachedNetworkImage(
-                                  fit: BoxFit.fitWidth,
-                                  imageUrl: _items[i]['contentImg'],
-                                  errorWidget: new Icon(Icons.error),
-                                  fadeOutDuration: new Duration(seconds: 0),
-                                  fadeInDuration: new Duration(seconds: 0),
-                                ),
-                              ),
-                            )),
-                        new GestureDetector(
-                            onTap: () => Navigator.push(context,
-                                    new MaterialPageRoute<void>(
-                                        builder: (BuildContext context) {
-                                  return new Search();
-                                })),
-                            child: new Container(
-                              padding:
-                                  // const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                  const EdgeInsets.all(0.0),
-                              color: Colors.white,
-                              child: new Padding(
-                                  padding: EdgeInsets.all(15.0),
-                                  child: new Text(_items[i]['text'],
-                                      style: new TextStyle(
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w500))),
-                            )
-                            // child: new Image.asset("assets/images/ic_mn.png", height: 180.0, fit: BoxFit.cover)),
-                            ),
-                        // new Divider(),
-                        new GestureDetector(
-                          onTap: () =>
-                              Fluttertoast.showToast(msg: '大话西游话题页待完善'),
-                          child: new Container(
-                            margin: EdgeInsets.only(
-                                left: 15.0, right: 15.0, bottom: 10.0),
-                            height: 30.0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                new Container(
-                                  color: Colors.grey[100],
-                                  padding: EdgeInsets.all(5.0),
-                                  child: new Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      new Icon(
-                                        Icons.link,
-                                        size: 22.0,
-                                        color: Color(0xffBBBBBB),
-                                      ),
-                                      new Text("大话西游",
-                                          style: new TextStyle(
-                                              color: Color(0xffBBBBBB),
-                                              fontSize: 13.0)),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        new Container(
-                          padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                          height: 2.0,
+    return new SmartRefresher(
+        enablePullUp: true,
+        controller: _refreshController,
+        headerBuilder: _buildHeader,
+        footerBuilder: _buildFooter,
+        onRefresh: (up) {
+          if (up) {
+            // 下拉刷新
+            new Future.delayed(const Duration(seconds: 2)).then((value) {
+              _refreshController.sendBack(true, RefreshStatus.completed);
+            });
+          } else {
+            Fluttertoast.showToast(msg: 'test');
+            new Future.delayed(const Duration(seconds: 2)).then((value) {
+              _refreshController.sendBack(true, RefreshStatus.completed);
+            });
+          }
+        },
+        onOffsetChange: _onOffsetCallback,
+        child: new ListView.builder(
+            itemCount: _items.length,
+            itemBuilder: (context, i) {
+              return Container(
+                padding: const EdgeInsets.only(),
+                color: Colors.white,
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    new GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, new MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                            return new Search();
+                          }));
+                        },
+                        child: new Container(
+                          padding: const EdgeInsets.only(
+                              top: 10.0, bottom: 10.0, left: 15.0),
                           color: Colors.white,
-                          child: new Image.asset(
-                            'assets/images/dot.png',
-                            fit: BoxFit.contain,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        new Container(
-                          padding: EdgeInsets.all(15.0),
                           child: new Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              new Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  buildGestureDetector(
-                                      Icons.favorite_border, '点赞待完善'),
-                                  buildGestureDetector(Icons.message, '评论待完善'),
-                                  buildGestureDetector(Icons.share, '分享待完善'),
-                                  buildGestureDetector(Icons.thumb_up, '推荐待完善'),
-                                ],
+                              new CircleAvatar(
+                                radius: 25.0,
+                                backgroundImage:
+                                    new NetworkImage(_items[i]['headImg']),
                               ),
-                              new Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                              new Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  new GestureDetector(
-                                    onTap: () {
-                                      showModalBottomSheet<void>(
-                                          context: context,
-                                          builder: (BuildContext _context) {
-                                            return new Container(
-                                                child: new Padding(
-                                              padding:
-                                                  const EdgeInsets.all(0.0),
-                                              child: new Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: <Widget>[
-                                                  buildModalItem(_context,
-                                                      '复制链接', '复制功能待完善'),
-                                                  DividingLine(),
-                                                  buildModalItem(_context,
-                                                      '屏蔽相关标签', '屏蔽待完善'),
-                                                  WhiteSpace(5.0, null),
-                                                  buildModalItem(
-                                                      _context, '取消', ''),
-                                                ],
-                                              ),
-                                            ));
-                                          });
-                                    },
-                                    child: new Container(
-                                      color: Colors.white,
-                                      child: new Icon(Icons.more_horiz,
-                                          size: 24.0, color: Color(0xffBBBBBB)),
-                                    ),
-                                  )
+                                  buildPadding(_items[i]['name'])
                                 ],
                               )
                             ],
                           ),
+                        )),
+                    new GestureDetector(
+                        onTap: () =>
+                            showPhoto(context, _items[i]['contentImg']),
+                        child: new Container(
+                          color: Colors.white,
+                          padding: const EdgeInsets.all(0.0),
+                          width: window.physicalSize.width,
+                          // child: new Image.asset(),
+                          // child: new Image.asset(_items[i]['contentImg'],
+                          child: new SizedBox(
+                            width: MediaQuery.of(context).size.width.toDouble(),
+                            child: new CachedNetworkImage(
+                              fit: BoxFit.fitWidth,
+                              imageUrl: _items[i]['contentImg'],
+                              errorWidget: new Icon(Icons.error),
+                              fadeOutDuration: new Duration(seconds: 0),
+                              fadeInDuration: new Duration(seconds: 0),
+                            ),
+                          ),
+                        )),
+                    new GestureDetector(
+                        onTap: () => Navigator.push(context,
+                                new MaterialPageRoute<void>(
+                                    builder: (BuildContext context) {
+                              return new Search();
+                            })),
+                        child: new Container(
+                          padding:
+                              // const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                              const EdgeInsets.all(0.0),
+                          color: Colors.white,
+                          child: new Padding(
+                              padding: EdgeInsets.all(15.0),
+                              child: new Text(_items[i]['text'],
+                                  style: new TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500))),
+                        )
+                        // child: new Image.asset("assets/images/ic_mn.png", height: 180.0, fit: BoxFit.cover)),
                         ),
-                        new Container(
-                            padding: EdgeInsets.only(left: 15.0, bottom: 10.0),
-                            child: new Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                new Text("88热度",
-                                    style: new TextStyle(
-                                        color: Color(0xff888888),
-                                        fontSize: 12.0)),
-                              ],
-                            )),
-                        WhiteSpace(null, null),
-                      ],
+                    // new Divider(),
+                    new GestureDetector(
+                      onTap: () => Fluttertoast.showToast(msg: '大话西游话题页待完善'),
+                      child: new Container(
+                        margin: EdgeInsets.only(
+                            left: 15.0, right: 15.0, bottom: 10.0),
+                        height: 30.0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            new Container(
+                              color: Colors.grey[100],
+                              padding: EdgeInsets.all(5.0),
+                              child: new Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  new Icon(
+                                    Icons.link,
+                                    size: 22.0,
+                                    color: Color(0xffBBBBBB),
+                                  ),
+                                  new Text("大话西游",
+                                      style: new TextStyle(
+                                          color: Color(0xffBBBBBB),
+                                          fontSize: 13.0)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  );
-                }));
-      },
-    );
+                    new Container(
+                      padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                      height: 2.0,
+                      color: Colors.white,
+                      child: new Image.asset(
+                        'assets/images/dot.png',
+                        fit: BoxFit.contain,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    new Container(
+                      padding: EdgeInsets.all(15.0),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          new Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              buildGestureDetector(
+                                  Icons.favorite_border, '点赞待完善'),
+                              buildGestureDetector(Icons.message, '评论待完善'),
+                              buildGestureDetector(Icons.share, '分享待完善'),
+                              buildGestureDetector(Icons.thumb_up, '推荐待完善'),
+                            ],
+                          ),
+                          new Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              new GestureDetector(
+                                onTap: () {
+                                  showModalBottomSheet<void>(
+                                      context: context,
+                                      builder: (BuildContext _context) {
+                                        return new Container(
+                                            child: new Padding(
+                                          padding: const EdgeInsets.all(0.0),
+                                          child: new Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              buildModalItem(
+                                                  _context, '复制链接', '复制功能待完善'),
+                                              DividingLine(),
+                                              buildModalItem(
+                                                  _context, '屏蔽相关标签', '屏蔽待完善'),
+                                              WhiteSpace(5.0, null),
+                                              buildModalItem(
+                                                  _context, '取消', ''),
+                                            ],
+                                          ),
+                                        ));
+                                      });
+                                },
+                                child: new Container(
+                                  color: Colors.white,
+                                  child: new Icon(Icons.more_horiz,
+                                      size: 24.0, color: Color(0xffBBBBBB)),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    new Container(
+                        padding: EdgeInsets.only(left: 15.0, bottom: 10.0),
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            new Text("88热度",
+                                style: new TextStyle(
+                                    color: Color(0xff888888), fontSize: 12.0)),
+                          ],
+                        )),
+                    WhiteSpace(null, null),
+                  ],
+                ),
+              );
+            }));
   }
 
   void showPhoto(BuildContext context, String assertName) {
@@ -475,22 +535,51 @@ class HomeTab extends StatelessWidget {
   }
 
   Widget subscriptionListView(context) {
-    return new Refresh(
-      onFooterRefresh: onFooterRefresh,
-      onHeaderRefresh: onHeaderRefresh,
-      childBuilder: (BuildContext context,
-          {ScrollController controller, ScrollPhysics physics}) {
-        return new Container(
-            child: new ListView(
-                physics: physics,
-                controller: controller,
-                children: [
-              new Center(
-                child: new Text("暂没有订阅"),
-              )
-            ]));
+    return new SmartRefresher(
+      enablePullUp: true,
+      controller: _refreshController,
+      headerBuilder: _buildHeader,
+      footerBuilder: _buildFooter,
+      headerConfig: new RefreshConfig(
+        triggerDistance: 60.0,
+      ),
+      onRefresh: (up) {
+        if (up) {
+          new Future.delayed(const Duration(milliseconds: 2000)).then((val) {
+            _refreshController.sendBack(true, RefreshStatus.completed);
+          });
+        } else {
+          new Future.delayed(const Duration(milliseconds: 2000)).then((val) {
+            _refreshController.sendBack(false, RefreshStatus.failed);
+          });
+        }
       },
+      onOffsetChange: _onOffsetCallback,
+      child: new ListView.builder(
+        itemExtent: 100.0,
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return data[index];
+        },
+      ),
     );
+
+    // return new Refresh(
+    //   onFooterRefresh: onFooterRefresh,
+    //   onHeaderRefresh: onHeaderRefresh,
+    //   childBuilder: (BuildContext context,
+    //       {ScrollController controller, ScrollPhysics physics}) {
+    //     return new Container(
+    //         child: new ListView(
+    //             physics: physics,
+    //             controller: controller,
+    //             children: [
+    //           new Center(
+    //             child: new Text("暂没有订阅"),
+    //           )
+    //         ]));
+    //   },
+    // );
   }
 
   // 双击退出页面

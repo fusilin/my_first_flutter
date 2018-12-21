@@ -135,12 +135,12 @@ class _MfwAppState extends State<MfwApp> {
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
-              if (index == 0 || index == 2 || index == 4) {
-                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark
-                    .copyWith(statusBarIconBrightness: Brightness.dark));
-              } else {
+              if (index == 3) {
                 SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
                     .copyWith(statusBarIconBrightness: Brightness.light));
+              } else {
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark
+                    .copyWith(statusBarIconBrightness: Brightness.dark));
               }
               _currentIndex = index;
             });

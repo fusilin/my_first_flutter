@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:mfw/view/app/search.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:ui';
-
 import 'dart:async';
-import 'package:flutter_refresh/flutter_refresh.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:mfw/model/model.dart';
+import 'package:mfw/view/app/search.dart';
 import 'package:mfw/components/dividing_line.dart';
 import 'package:mfw/components/white_space.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+//import 'package:cached_network_image/cached_network_image.dart';
 import "package:pull_to_refresh/pull_to_refresh.dart";
 
 const double _kMinFlingVelocity = 800.0;
@@ -135,6 +135,7 @@ class _HomeTab extends State<HomeTab> {
   int _first = 0;
   RefreshController _refreshController;
   List<Widget> data = [];
+
   void _getDatas() {
     for (int i = 0; i < 14; i++) {
       data.add(new Container(
@@ -312,6 +313,7 @@ class _HomeTab extends State<HomeTab> {
         controller: _refreshController,
         headerBuilder: _buildHeader,
         footerBuilder: _buildFooter,
+        headerConfig: new RefreshConfig(triggerDistance: 60.0),
         onRefresh: (up) {
           if (up) {
             // 下拉刷新
@@ -366,26 +368,26 @@ class _HomeTab extends State<HomeTab> {
                             ],
                           ),
                         )),
-                    new GestureDetector(
-                        onTap: () =>
-                            showPhoto(context, _items[i]['contentImg']),
-                        child: new Container(
-                          color: Colors.white,
-                          padding: const EdgeInsets.all(0.0),
-                          width: window.physicalSize.width,
-                          // child: new Image.asset(),
-                          // child: new Image.asset(_items[i]['contentImg'],
-                          child: new SizedBox(
-                            width: MediaQuery.of(context).size.width.toDouble(),
-                            child: new CachedNetworkImage(
-                              fit: BoxFit.fitWidth,
-                              imageUrl: _items[i]['contentImg'],
-                              errorWidget: new Icon(Icons.error),
-                              fadeOutDuration: new Duration(seconds: 0),
-                              fadeInDuration: new Duration(seconds: 0),
-                            ),
-                          ),
-                        )),
+//                    new GestureDetector(
+//                        onTap: () =>
+//                            showPhoto(context, _items[i]['contentImg']),
+//                        child: new Container(
+//                          color: Colors.white,
+//                          padding: const EdgeInsets.all(0.0),
+//                          width: window.physicalSize.width,
+//                          // child: new Image.asset(),
+//                          // child: new Image.asset(_items[i]['contentImg'],
+//                          child: new SizedBox(
+//                            width: MediaQuery.of(context).size.width.toDouble(),
+//                            child: new CachedNetworkImage(
+//                              fit: BoxFit.fitWidth,
+//                              imageUrl: _items[i]['contentImg'],
+//                              errorWidget: new Icon(Icons.error),
+//                              fadeOutDuration: new Duration(seconds: 0),
+//                              fadeInDuration: new Duration(seconds: 0),
+//                            ),
+//                          ),
+//                        )),
                     new GestureDetector(
                         onTap: () => Navigator.push(context,
                                 new MaterialPageRoute<void>(
@@ -563,23 +565,6 @@ class _HomeTab extends State<HomeTab> {
         },
       ),
     );
-
-    // return new Refresh(
-    //   onFooterRefresh: onFooterRefresh,
-    //   onHeaderRefresh: onHeaderRefresh,
-    //   childBuilder: (BuildContext context,
-    //       {ScrollController controller, ScrollPhysics physics}) {
-    //     return new Container(
-    //         child: new ListView(
-    //             physics: physics,
-    //             controller: controller,
-    //             children: [
-    //           new Center(
-    //             child: new Text("暂没有订阅"),
-    //           )
-    //         ]));
-    //   },
-    // );
   }
 
   // 双击退出页面
@@ -594,8 +579,8 @@ class _HomeTab extends State<HomeTab> {
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIos: 1,
           gravity: ToastGravity.BOTTOM,
-          bgcolor: "#99000000",
-          textcolor: '#ffffff');
+          backgroundColor: Color(0xff990000),
+          textColor: Color(0xffffffff));
       new Timer(new Duration(milliseconds: 1500), () {
         _first = 0;
       });
@@ -605,23 +590,29 @@ class _HomeTab extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    return new WillPopScope(
+    return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
+      return new WillPopScope(
         onWillPop: () => _onWillPop(),
-        child: new SafeArea(
-            child: new DefaultTabController(
-                length: 2,
-                child: new Scaffold(
-                  appBar: new TabBar(
-                    labelColor: Colors.black,
-                    indicatorColor: Colors.black,
-                    unselectedLabelColor: Colors.black,
-                    tabs: <Widget>[new Tab(text: "关注"), new Tab(text: "订阅")],
-                  ),
-                  backgroundColor: Colors.white,
-                  body: new TabBarView(children: <Widget>[
-                    attentionListView(context),
-                    subscriptionListView(context)
-                  ]),
-                ))));
+        child: new Container(
+          padding: EdgeInsets.only(top: model.statusHeight ?? 20.0),
+          color: new Color(0xffffffff),
+          child: new DefaultTabController(
+              length: 2,
+              child: new Scaffold(
+                appBar: new TabBar(
+                  labelColor: Colors.black,
+                  indicatorColor: Colors.black,
+                  unselectedLabelColor: Colors.black,
+                  tabs: <Widget>[new Tab(text: "关注"), new Tab(text: "订阅")],
+                ),
+                backgroundColor: Colors.white,
+                body: new TabBarView(children: <Widget>[
+                  attentionListView(context),
+                  subscriptionListView(context)
+                ]),
+              )),
+        ),
+      );
+    });
   }
 }

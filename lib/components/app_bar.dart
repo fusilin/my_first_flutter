@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:mfw/model/model.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomTitleBarController extends ValueNotifier<ContomTitleAlphaValue> {
   CustomTitleBarController() : super(new ContomTitleAlphaValue());

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mfw/components/app_bar.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:ui';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:mfw/model/model.dart';
+import 'package:mfw/components/app_bar.dart';
 import 'package:mfw/view/mine/home_page.dart';
 import 'package:mfw/components/route_animation.dart';
-import 'dart:ui';
 import 'package:mfw/components/text.dart';
 import 'package:mfw/view/mine/barcode_scan.dart';
 import 'package:mfw/view/mine/setting.dart';
 import 'package:mfw/view/mine/message.dart';
-import 'package:mfw/view/mine/history.dart';
 
 class MineTab extends StatefulWidget {
   _MineTabState createState() => new _MineTabState();

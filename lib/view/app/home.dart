@@ -579,8 +579,8 @@ class _HomeTab extends State<HomeTab> {
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIos: 1,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Color(0xff990000),
-          textColor: Color(0xffffffff));
+          bgcolor: '#cccccc',
+          textcolor: '#ffffff');
       new Timer(new Duration(milliseconds: 1500), () {
         _first = 0;
       });

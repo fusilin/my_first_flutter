@@ -9,6 +9,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:mfw/model/model.dart';
 import 'dart:ui';
 import 'package:flutter/services.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:mfw/view/mine/widget/home_page.dart';
 
@@ -20,11 +21,36 @@ class _HomePageState extends State<HomePage> {
   Color _color = Colors.white;
   ScrollController _mScrollController = new ScrollController();
   bool _isNeedSetAlpha = false;
+  RefreshController _refreshController;
+  ValueNotifier<double> topOffsetLis = new ValueNotifier(0.0);
+  ValueNotifier<double> bottomOffsetLis = new ValueNotifier(0.0);
 
   final List<Map<String, Object>> _items = [
     {'title': '今天访问', 'num': '0'},
     {'title': '累计访问', 'num': '0'}
   ];
+
+  Widget _buildHeader(context, mode) {
+    return new ClassicIndicator(
+      mode: mode,
+      idleText: '下拉刷新',
+      releaseText: '释放刷新',
+      refreshingText: '正在刷新',
+      completeText: '刷新成功',
+    );
+  }
+
+//  Widget _buildFooter(context, mode) {
+//    return new ClassicIndicator(mode: mode);
+//  }
+
+  void _onOffsetCallback(bool isUp, double offset) {
+    if (isUp) {
+      topOffsetLis.value = offset;
+    } else {
+      bottomOffsetLis.value = offset;
+    }
+  }
 
   void initState() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark
@@ -56,6 +82,7 @@ class _HomePageState extends State<HomePage> {
         }
       }
     });
+    _refreshController = new RefreshController();
     super.initState();
   }
 
@@ -82,214 +109,263 @@ class _HomePageState extends State<HomePage> {
     return _widget;
   }
 
+  Widget contentScrollView() {
+    return new SmartRefresher(
+      controller: _refreshController,
+      headerBuilder: _buildHeader,
+      headerConfig:
+          new RefreshConfig(triggerDistance: 60.0, visibleRange: 70.0),
+      onRefresh: (up) {
+        if (up) {
+          new Future.delayed(const Duration(milliseconds: 2000)).then((val) {
+            _refreshController.sendBack(true, RefreshStatus.completed);
+          });
+        }
+      },
+      onOffsetChange: _onOffsetCallback,
+      child: ListView(
+        children: <Widget>[],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
       return new Scaffold(
-        body: new Stack(
-          children: <Widget>[
-            new Listener(
-                onPointerDown: (dd) {},
-                onPointerMove: (sss) {},
-                onPointerUp: (ss) {},
-                onPointerCancel: (s) {},
-                child: new SingleChildScrollView(
-                    controller: _mScrollController,
-                    child: new Stack(
-                      children: <Widget>[
-                        new Column(
+        body: new SmartRefresher(
+          controller: _refreshController,
+          headerBuilder: _buildHeader,
+          headerConfig:
+              new RefreshConfig(triggerDistance: 60.0, visibleRange: 70.0),
+          onRefresh: (up) {
+            if (up) {
+              new Future.delayed(const Duration(milliseconds: 2000))
+                  .then((val) {
+                _refreshController.sendBack(true, RefreshStatus.completed);
+              });
+            }
+          },
+          onOffsetChange: _onOffsetCallback,
+          child: ListView(
+            children: <Widget>[
+              new Stack(
+                children: <Widget>[
+                  new Listener(
+                    onPointerDown: (dd) {},
+                    onPointerMove: (sss) {},
+                    onPointerUp: (ss) {},
+                    onPointerCancel: (s) {},
+                    child: new SingleChildScrollView(
+                        controller: _mScrollController,
+                        child: new Stack(
                           children: <Widget>[
-                            new Container(
-                                height: 280.0,
-                                width: window.physicalSize.width,
-                                decoration: BoxDecoration(
-                                  image: const DecorationImage(
-                                    image: const AssetImage(
-                                      'assets/images/mine_home_page.jpg',
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.elliptical(
-                                          model.deviceWidth / 2, 15.0),
-                                      bottomLeft: Radius.elliptical(
-                                          model.deviceWidth / 2, 15.0)),
-                                ),
-                                child: new Padding(
-                                  padding: EdgeInsets.only(
-                                      top: model.statusHeight + 48.0 + 8.0,
-                                      left: 20.0),
-                                  child: new Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      new CircleAvatar(
-                                        radius: 30.0,
-                                        backgroundImage: new NetworkImage(
-                                            "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
+                            new Column(
+                              children: <Widget>[
+                                new Container(
+                                    height: 280.0,
+                                    width: window.physicalSize.width,
+                                    decoration: BoxDecoration(
+                                      image: const DecorationImage(
+                                        image: const AssetImage(
+                                          'assets/images/mine_home_page.jpg',
+                                        ),
+                                        fit: BoxFit.cover,
                                       ),
-                                      new Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 8.0, bottom: 8.0),
-                                          child: new Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.elliptical(
+                                              model.deviceWidth / 2, 15.0),
+                                          bottomLeft: Radius.elliptical(
+                                              model.deviceWidth / 2, 15.0)),
+                                    ),
+                                    child: new Padding(
+                                      padding: EdgeInsets.only(
+                                          top: model.statusHeight + 48.0 + 8.0,
+                                          left: 20.0),
+                                      child: new Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          new CircleAvatar(
+                                            radius: 30.0,
+                                            backgroundImage: new NetworkImage(
+                                                "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
+                                          ),
+                                          new Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0, bottom: 8.0),
+                                              child: new Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  MText(
+                                                      title: '四阿哥',
+                                                      color: Colors.white,
+                                                      fontSize: 22.0,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                  new Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10.0),
+                                                    child: Label(
+                                                      height: 16.0,
+                                                      width: 26.0,
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              220,
+                                                              150),
+                                                      children: <Widget>[
+                                                        MText(
+                                                          title: 'LV.3',
+                                                          fontSize: 11.0,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              )),
+                                          new Row(
                                             children: <Widget>[
                                               MText(
-                                                  title: '四阿哥',
-                                                  color: Colors.white,
-                                                  fontSize: 22.0,
-                                                  fontWeight: FontWeight.w600),
+                                                title: '上海',
+                                                color: Colors.white,
+                                                fontSize: 12.0,
+                                              ),
                                               new Padding(
                                                 padding: const EdgeInsets.only(
                                                     left: 10.0),
-                                                child: Label(
-                                                  height: 16.0,
-                                                  width: 26.0,
-                                                  color: const Color.fromARGB(
-                                                      255, 255, 220, 150),
-                                                  children: <Widget>[
-                                                    MText(
-                                                      title: 'LV.3',
-                                                      fontSize: 11.0,
-                                                    ),
-                                                  ],
+                                                child: MText(
+                                                  title: '编辑个性签名，布置你的马蜂窝',
+                                                  color: Colors.white,
+                                                  fontSize: 12.0,
                                                 ),
                                               )
                                             ],
-                                          )),
-                                      new Row(
-                                        children: <Widget>[
-                                          MText(
-                                            title: '上海',
-                                            color: Colors.white,
-                                            fontSize: 12.0,
                                           ),
                                           new Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10.0),
-                                            child: MText(
-                                              title: '编辑个性签名，布置你的马蜂窝',
-                                              color: Colors.white,
-                                              fontSize: 12.0,
-                                            ),
-                                          )
+                                              padding: const EdgeInsets.only(
+                                                  top: 5.0),
+                                              child: new Row(children: <Widget>[
+                                                MText(
+                                                  title: '6关注',
+                                                  color: Colors.white,
+                                                  fontSize: 12.0,
+                                                ),
+                                                new Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10.0),
+                                                    child: MText(
+                                                        title: '0粉丝',
+                                                        color: Colors.white,
+                                                        fontSize: 12.0))
+                                              ]))
                                         ],
                                       ),
-                                      new Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 5.0),
-                                          child: new Row(children: <Widget>[
-                                            MText(
-                                              title: '6关注',
-                                              color: Colors.white,
-                                              fontSize: 12.0,
-                                            ),
-                                            new Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10.0),
-                                                child: MText(
-                                                    title: '0粉丝',
-                                                    color: Colors.white,
-                                                    fontSize: 12.0))
-                                          ]))
-                                    ],
+                                    )),
+                                new Container(
+                                  height: 60.0,
+                                  color: Colors.white,
+                                  child: buildRowTab(),
+                                ),
+                                new Container(
+                                  height: 250.0,
+                                  color: Colors.grey,
+                                  child: new Center(
+                                    child: new Text("dasdasdasdasd"),
                                   ),
-                                )),
-                            new Container(
-                              height: 60.0,
-                              color: Colors.white,
-                              child: buildRowTab(),
+                                ),
+                                new Container(
+                                  height: 250.0,
+                                  child: new Center(
+                                    child: new Text("dasdasdasdasd"),
+                                  ),
+                                ),
+                              ],
                             ),
-                            new Container(
-                              height: 250.0,
-                              color: Colors.grey,
-                              child: new Center(
-                                child: new Text("dasdasdasdasd"),
+                            new Positioned(
+                              top: 48.0 + model.statusHeight,
+                              right: 0.0,
+                              child: Label(
+                                height: 46.0,
+                                width: 90.0,
+                                color: Color.fromARGB(40, 0, 0, 0),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(23.0),
+                                  bottomLeft: Radius.circular(20.0),
+                                ),
+                                children: <Widget>[
+                                  new Padding(
+                                      padding: const EdgeInsets.only(left: 5.0),
+                                      child: new Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: buildItem(),
+                                      ))
+                                ],
                               ),
-                            ),
-                            new Container(
-                              height: 250.0,
-                              child: new Center(
-                                child: new Text("dasdasdasdasd"),
-                              ),
-                            ),
+                            )
                           ],
-                        ),
-                        new Positioned(
-                          top: 48.0 + model.statusHeight,
-                          right: 0.0,
-                          child: Label(
-                            height: 46.0,
-                            width: 90.0,
-                            color: Color.fromARGB(40, 0, 0, 0),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(23.0),
-                              bottomLeft: Radius.circular(20.0),
-                            ),
-                            children: <Widget>[
-                              new Padding(
-                                  padding: const EdgeInsets.only(left: 5.0),
-                                  child: new Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: buildItem(),
-                                  ))
-                            ],
+                        )),
+                  ),
+                  new Positioned(
+                    left: 0.0,
+                    right: 0.0,
+                    top: 0.0,
+                    child: MyAppBar(
+                      leading: <Widget>[
+                        new InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: new Padding(
+                            padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                            child: new Image.asset(
+                                'assets/images/icon_arrow_left.png',
+                                color: _color,
+                                height: 24.0,
+                                width: 24.0),
                           ),
                         )
                       ],
-                    ))),
-            new Positioned(
-              left: 0.0,
-              right: 0.0,
-              top: 0.0,
-              child: MyAppBar(
-                leading: <Widget>[
-                  new InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: new Padding(
-                      padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                      child: new Image.asset(
-                          'assets/images/icon_arrow_left.png',
-                          color: _color,
-                          height: 24.0,
-                          width: 24.0),
+                      isHeaderGradient: true,
+                      isTitleGradient: true,
+                      rBColor: 255,
+                      gBColor: 255,
+                      bBColor: 255,
+                      title: '四阿哥',
+                      actions: <Widget>[
+                        new Padding(
+                            padding: EdgeInsets.all(0.0),
+                            child: new InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: new Padding(
+                                padding:
+                                    EdgeInsets.only(top: 12.0, bottom: 12.0),
+                                child: new Image.asset(
+                                    'assets/images/mine_icon_menu.png',
+                                    color: _color,
+                                    height: 22.0,
+                                    width: 22.0),
+                              ),
+                            ))
+                      ],
                     ),
                   )
                 ],
-                isHeaderGradient: true,
-                isTitleGradient: true,
-                rBColor: 255,
-                gBColor: 255,
-                bBColor: 255,
-                title: '四阿哥',
-                actions: <Widget>[
-                  new Padding(
-                      padding: EdgeInsets.all(0.0),
-                      child: new InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: new Padding(
-                          padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                          child: new Image.asset(
-                              'assets/images/mine_icon_menu.png',
-                              color: _color,
-                              height: 22.0,
-                              width: 22.0),
-                        ),
-                      ))
-                ],
               ),
-            )
-          ],
+            ],
+          ),
         ),
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,

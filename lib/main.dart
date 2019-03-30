@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         model: countModel,
         child: new MaterialApp(
             title: '马蜂窝旅游',
+            debugShowCheckedModeBanner: false,
             theme: new ThemeData(primaryColor: Colors.black),
             home: Config()));
   }

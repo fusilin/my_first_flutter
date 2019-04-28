@@ -9,6 +9,7 @@ import 'package:mfw/components/text.dart';
 import 'package:mfw/view/mine/barcode_scan.dart';
 import 'package:mfw/view/mine/setting.dart';
 import 'package:mfw/view/mine/message.dart';
+//import 'package:mfw/core/ch_page.dart';
 
 class MineTab extends StatefulWidget {
   _MineTabState createState() => new _MineTabState();
@@ -17,6 +18,8 @@ class MineTab extends StatefulWidget {
 class _MineTabState extends State<MineTab> {
   ScrollController _mScrollController = new ScrollController();
   bool _isNeedSetAlpha = false;
+
+//  @ChPage('test')
   void initState() {
     _mScrollController.addListener(() {
       if (_mScrollController.offset < 80.0) {
@@ -359,9 +362,12 @@ class _MineTabState extends State<MineTab> {
                 padding: EdgeInsets.all(0.0),
                 child: new InkWell(
                   onTap: () {
-                    Navigator.push(context, AnimationPageRoute(builder: (c) {
+                    Navigator.push(context, new MaterialPageRoute(builder: (c) {
                       return Message();
                     }));
+//                    Navigator.push(context, AnimationPageRoute(builder: (c) {
+//                      return Message();
+//                    }));
                   },
                   child: new Padding(
                     padding: EdgeInsets.only(top: 12.0, bottom: 12.0),

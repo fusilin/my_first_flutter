@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mfw/style/size.dart';
+import 'package:mfw/style/color.dart';
 import 'dart:ui';
 
 class MText extends StatelessWidget {
   const MText(
       {Key key,
-      @required this.title,
+      this.title='',
       this.textAlign,
       this.maxLines,
       this.fontSize,
@@ -20,14 +22,24 @@ class MText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Text(
-      title ?? ' ',
-      textAlign: textAlign ?? TextAlign.center,
-      maxLines: maxLines ?? 1,
-      style: TextStyle(
-          fontSize: fontSize ?? 14.0,
-          color: color ?? Colors.black,
-          fontWeight: fontWeight ?? FontWeight.normal),
-    );
+    return maxLines != null
+        ? new Text(
+            title ?? '',
+            textAlign: textAlign ?? TextAlign.center,
+            maxLines: maxLines,
+            style: TextStyle(
+                fontSize: fontSize ?? SizeConst.base,
+                color: color ?? ColorConst.black,
+                fontWeight: fontWeight ?? FontWeight.w300
+            ),
+          )
+        : new Text(
+            title,
+            textAlign: textAlign ?? TextAlign.center,
+            style: TextStyle(
+                fontSize: fontSize ?? SizeConst.base,
+                color: color ?? ColorConst.black,
+                fontWeight: fontWeight ?? FontWeight.w300),
+          );
   }
 }

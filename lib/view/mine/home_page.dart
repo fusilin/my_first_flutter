@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
   List buildItem() {
     List<Widget> _widget = [];
     for (int i = 0; i < _items.length; i++) {
-      _widget.add(new Row(
+      _widget.add(Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[

@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:mfw/components/app_bar.dart';
 import 'package:mfw/components/text.dart';
+import 'package:mfw/core/page_scaffold.dart';
+import 'package:mfw/view/mine/message.dart';
 
 class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        backgroundColor: new Color.fromARGB(255, 242, 242, 245),
-        appBar: MyAppBar(
-          leading: <Widget>[
-            new InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: new Padding(
-                  padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                  child: new Image.asset('assets/images/icon_arrow_left.png',
-                      height: 22.0, width: 22.0)),
-            ),
-          ],
-          title: '设置',
-          fontsize: 18.0,
-          rBColor: 255,
-          gBColor: 255,
-          bBColor: 255,
-        ),
+//    void rightTap(){
+//      Navigator.push(context, new MaterialPageRoute(builder: (c) {
+//        return Message();
+//      }));
+//    }
+    return new PageScaffold(
+        barSettings: {
+          'title': {'text': '我是标题hahahahahha哈哈哈哈哈哈哈'},
+          'leftItems': {
+            'leftItem0': {'type': 2}
+          },
+          'rightItems': {
+            'rightItem0': {
+              'type': 1,
+              'text': '文字',
+              'onTap': Message(),
+            },
+            'rightItem1': {
+              'type': 2,
+              'onTap': Setting(),
+              'image': 'assets/images/icon_setup.png'
+            },
+          },
+          'style': {'backgroundColor': new Color.fromARGB(255, 242, 242, 245)}
+        },
         body: new Center(
-          child: MText(title: '设置页'),
+          child: MText(title: '设置页enenen'),
         ));
   }
 }

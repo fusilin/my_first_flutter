@@ -26,7 +26,7 @@ class _MfwAppState extends State<MfwApp> {
       color: _tabTextActiveColor,
       fontSize: _TabTextSize,
       fontWeight: FontWeight.w600);
-  int _currentIndex = 0;
+  int _currentIndex = 4;
 
   Widget getTabImage(path, index) {
     if (index == 2) {
@@ -50,6 +50,8 @@ class _MfwAppState extends State<MfwApp> {
     // 非全屏
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark
+        .copyWith(statusBarIconBrightness: Brightness.dark));
     if (_tabImages == null) {
       _tabImages = [
         [

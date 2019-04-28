@@ -1,32 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:mfw/components/app_bar.dart';
-import 'package:mfw/components/text.dart';
+import 'package:mfw/core/page_scaffold.dart';
+import 'package:mfw/view/mine/setting.dart';
 
-class Message extends StatelessWidget {
+class Message extends StatefulWidget {
+  _MessageState createState() => new _MessageState();
+}
+
+class _MessageState extends State<Message> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        backgroundColor: new Color.fromARGB(255, 242, 242, 245),
-        appBar: MyAppBar(
-          leading: <Widget>[
-            new InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: new Padding(
-                  padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                  child: new Image.asset('assets/images/icon_arrow_left.png',
-                      height: 22.0, width: 22.0)),
-            ),
-          ],
-          title: '消息中心',
-          fontsize: 18.0,
-          rBColor: 255,
-          gBColor: 255,
-          bBColor: 255,
-        ),
+    return PageScaffold(
+        barSettings: {
+          'title': {'text': '消息中心'},
+          'leftItems': {
+            'leftItem0': {'type': 2}
+          },
+          'rightItems': {
+            'rightItem0': {
+              'type': 2,
+              'onTap': Setting(),
+              'image': 'assets/images/icon_setup.png'
+            }
+          }
+        },
         body: new Center(
-          child: MText(title: '消息页'),
+          child: new InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (e) {
+                return Setting();
+              }));
+            },
+            child: new Padding(
+                padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                child: new Image.asset('assets/images/icon_setup.png',
+                    height: 24.0, width: 24.0)),
+          ),
         ));
   }
 }

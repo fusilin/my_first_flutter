@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:mfw/core/page_scaffold.dart';
 
 class BarcodeScan extends StatefulWidget {
   const BarcodeScan({Key key}) : super(key: key);
@@ -12,10 +13,13 @@ class BarcodeScan extends StatefulWidget {
 
 class _BarcodeScanState extends State<BarcodeScan> {
   String barcode = "";
+
   @override
   void initState() {
-    scan();
     super.initState();
+    new Timer(new Duration(milliseconds: 500), () {
+      scan();
+    });
   }
 
   @override
@@ -45,17 +49,16 @@ class _BarcodeScanState extends State<BarcodeScan> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          leading: new IconButton(
-              icon: Icon(Icons.keyboard_arrow_left),
-              iconSize: 24.0,
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          elevation: 0.0,
-        ),
-        backgroundColor: new Color.fromARGB(255, 242, 242, 245),
+    return PageScaffold(
+        barSettings: {
+          'leftItems': {
+            'leftItem0': {
+              'type': 3,
+              'onTap': null,
+              'icon': Icons.keyboard_arrow_left
+            }
+          }
+        },
         body: new Center(
             child: new Padding(
           padding: EdgeInsets.all(15.0),

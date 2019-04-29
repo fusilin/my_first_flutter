@@ -13,7 +13,7 @@ class GlobalModel extends Model {
   String _title = ' ';
   get title => _title;
 
-  int _titleOpacity = 0;
+  int _titleOpacity = 255;
   get titleOpacity => _titleOpacity;
 
   void getStatusHeight(value) {

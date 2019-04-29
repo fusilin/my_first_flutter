@@ -51,7 +51,7 @@ dependencies:
   # 全屏启动
   splashscreen: ^1.1.0
   # 刷新
-  pull_to_refresh: ^1.1.6
+  pull_to_refresh: ^1.2.0
   
 
 dev_dependencies:

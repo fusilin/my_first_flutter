@@ -129,7 +129,7 @@ class SearchState extends State<Search> {
       headerBuilder: _buildHeader,
 //        footerBuilder: _buildFooter,
       headerConfig:
-          new RefreshConfig(triggerDistance: 60.0, visibleRange: 70.0),
+          new RefreshConfig(triggerDistance: 60.0),
       onRefresh: (up) {
         if (up) {
           new Future.delayed(const Duration(milliseconds: 2000)).then((val) {

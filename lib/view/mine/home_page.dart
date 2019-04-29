@@ -1,13 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mfw/components/route_animation.dart';
-import 'package:mfw/components/app_bar.dart';
-import 'package:mfw/view/app/search.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:ui';
+import 'package:mfw/components/new_app_bar.dart';
 import 'package:mfw/components/text.dart';
+import 'package:mfw/style/size.dart';
 import 'package:mfw/components/label.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:mfw/model/model.dart';
-import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -18,12 +17,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Color _color = Colors.white;
   ScrollController _mScrollController = new ScrollController();
   bool _isNeedSetAlpha = false;
   RefreshController _refreshController;
   ValueNotifier<double> topOffsetLis = new ValueNotifier(0.0);
   ValueNotifier<double> bottomOffsetLis = new ValueNotifier(0.0);
+  double _offset = 0.0;
 
   final List<Map<String, Object>> _items = [
     {'title': '今天访问', 'num': '0'},
@@ -50,40 +49,25 @@ class _HomePageState extends State<HomePage> {
     } else {
       bottomOffsetLis.value = offset;
     }
+
+    if (offset < 250.0) {
+      if (offset < 0.0) return;
+      _isNeedSetAlpha = true;
+      ScopedModel.of<GlobalModel>(context)
+          .changeTitleOpacity(((offset / 250) * 255).toInt());
+    } else {
+      if (_isNeedSetAlpha) {
+        ScopedModel.of<GlobalModel>(context).changeTitleOpacity(255);
+        _isNeedSetAlpha = false;
+      }
+    }
   }
 
   void initState() {
+    super.initState();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark
         .copyWith(statusBarIconBrightness: Brightness.dark));
-    _mScrollController.addListener(() {
-      if (_mScrollController.offset < 250.0) {
-        _isNeedSetAlpha = true;
-        ScopedModel.of<GlobalModel>(context)
-            .changeOpacity(((_mScrollController.offset / 250) * 255).toInt());
-        ScopedModel.of<GlobalModel>(context).changeTitleOpacity(
-            ((_mScrollController.offset / 250) * 255).toInt());
-        if (_mScrollController.offset < 100.0) {
-          setState(() {
-            _color = Colors.white;
-          });
-        } else {
-          setState(() {
-            _color = Colors.black;
-          });
-        }
-      } else {
-        if (_isNeedSetAlpha) {
-          ScopedModel.of<GlobalModel>(context).changeOpacity(255);
-          ScopedModel.of<GlobalModel>(context).changeTitleOpacity(255);
-          setState(() {
-            _color = Colors.black;
-          });
-          _isNeedSetAlpha = false;
-        }
-      }
-    });
     _refreshController = new RefreshController();
-    super.initState();
   }
 
   List buildItem() {
@@ -96,12 +80,12 @@ class _HomePageState extends State<HomePage> {
           MText(
             title: _items[i]['title'],
             color: Colors.white,
-            fontSize: 12.0,
+            fontSize: SizeConst.px12,
           ),
           MText(
             title: ' ' + _items[i]['num'],
             color: Color.fromARGB(255, 255, 230, 76),
-            fontSize: 12.0,
+            fontSize: SizeConst.px12,
           ),
         ],
       ));
@@ -113,11 +97,10 @@ class _HomePageState extends State<HomePage> {
     return new SmartRefresher(
       controller: _refreshController,
       headerBuilder: _buildHeader,
-      headerConfig:
-          new RefreshConfig(triggerDistance: 60.0, visibleRange: 70.0),
+      headerConfig: new RefreshConfig(triggerDistance: 0.0),
       onRefresh: (up) {
         if (up) {
-          new Future.delayed(const Duration(milliseconds: 2000)).then((val) {
+          new Future.delayed(const Duration(milliseconds: 1000)).then((val) {
             _refreshController.sendBack(true, RefreshStatus.completed);
           });
         }
@@ -132,279 +115,161 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
-      return new Scaffold(
-        body: new SmartRefresher(
-          controller: _refreshController,
-          headerBuilder: _buildHeader,
-          headerConfig:
-              new RefreshConfig(triggerDistance: 60.0, visibleRange: 70.0),
-          onRefresh: (up) {
-            if (up) {
-              new Future.delayed(const Duration(milliseconds: 2000))
-                  .then((val) {
-                _refreshController.sendBack(true, RefreshStatus.completed);
-              });
-            }
-          },
-          onOffsetChange: _onOffsetCallback,
-          child: ListView(
+      return Scaffold(
+        body: Container(
+          child: Stack(
             children: <Widget>[
-              new Stack(
-                children: <Widget>[
-                  new Listener(
-                    onPointerDown: (dd) {},
-                    onPointerMove: (sss) {},
-                    onPointerUp: (ss) {},
-                    onPointerCancel: (s) {},
-                    child: new SingleChildScrollView(
-                        controller: _mScrollController,
-                        child: new Stack(
-                          children: <Widget>[
-                            new Column(
-                              children: <Widget>[
-                                new Container(
-                                    height: 280.0,
-                                    width: window.physicalSize.width,
-                                    decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        image: const AssetImage(
-                                          'assets/images/mine_home_page.jpg',
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.elliptical(
-                                              model.deviceWidth / 2, 15.0),
-                                          bottomLeft: Radius.elliptical(
-                                              model.deviceWidth / 2, 15.0)),
-                                    ),
-                                    child: new Padding(
-                                      padding: EdgeInsets.only(
-                                          top: model.statusHeight + 48.0 + 8.0,
-                                          left: 20.0),
-                                      child: new Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          new CircleAvatar(
-                                            radius: 30.0,
-                                            backgroundImage: new NetworkImage(
-                                                "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
-                                          ),
-                                          new Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 8.0, bottom: 8.0),
-                                              child: new Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: <Widget>[
-                                                  MText(
-                                                      title: '四阿哥',
-                                                      color: Colors.white,
-                                                      fontSize: 22.0,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                  new Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10.0),
-                                                    child: Label(
-                                                      height: 16.0,
-                                                      width: 26.0,
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              255,
-                                                              220,
-                                                              150),
-                                                      children: <Widget>[
-                                                        MText(
-                                                          title: 'LV.3',
-                                                          fontSize: 11.0,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              )),
-                                          new Row(
-                                            children: <Widget>[
-                                              MText(
-                                                title: '上海',
-                                                color: Colors.white,
-                                                fontSize: 12.0,
-                                              ),
-                                              new Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 10.0),
-                                                child: MText(
-                                                  title: '编辑个性签名，布置你的马蜂窝',
-                                                  color: Colors.white,
-                                                  fontSize: 12.0,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          new Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 5.0),
-                                              child: new Row(children: <Widget>[
-                                                MText(
-                                                  title: '6关注',
-                                                  color: Colors.white,
-                                                  fontSize: 12.0,
-                                                ),
-                                                new Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10.0),
-                                                    child: MText(
-                                                        title: '0粉丝',
-                                                        color: Colors.white,
-                                                        fontSize: 12.0))
-                                              ]))
-                                        ],
-                                      ),
-                                    )),
-                                new Container(
-                                  height: 60.0,
-                                  color: Colors.white,
-                                  child: buildRowTab(),
+              new SmartRefresher(
+                  controller: _refreshController,
+                  headerBuilder: _buildHeader,
+                  headerConfig: new RefreshConfig(triggerDistance: 60.0),
+                  onRefresh: (up) {
+                    if (up) {
+                      new Future.delayed(const Duration(milliseconds: 2000))
+                          .then((val) {
+                        _refreshController.sendBack(
+                            true, RefreshStatus.completed);
+                      });
+                    }
+                  },
+                  onOffsetChange: _onOffsetCallback,
+                  child: ListView(children: <Widget>[
+                    new Column(
+                      children: <Widget>[
+                        new Container(
+                            height: 280.0,
+                            width: window.physicalSize.width,
+                            decoration: BoxDecoration(
+                              image: const DecorationImage(
+                                image: const AssetImage(
+                                  'assets/images/mine_home_page.jpg',
                                 ),
-                                new Container(
-                                  height: 250.0,
-                                  color: Colors.grey,
-                                  child: new Center(
-                                    child: new Text("dasdasdasdasd"),
-                                  ),
-                                ),
-                                new Container(
-                                  height: 250.0,
-                                  child: new Center(
-                                    child: new Text("dasdasdasdasd"),
-                                  ),
-                                ),
-                              ],
+                                fit: BoxFit.cover,
+                              ),
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.elliptical(
+                                      model.deviceWidth / 2, 15.0),
+                                  bottomLeft: Radius.elliptical(
+                                      model.deviceWidth / 2, 15.0)),
                             ),
-                            new Positioned(
-                              top: 48.0 + model.statusHeight,
-                              right: 0.0,
-                              child: Label(
-                                height: 46.0,
-                                width: 90.0,
-                                color: Color.fromARGB(40, 0, 0, 0),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(23.0),
-                                  bottomLeft: Radius.circular(20.0),
-                                ),
+                            child: new Padding(
+                              padding: EdgeInsets.only(
+                                  top: model.statusHeight + 48.0 + 8.0,
+                                  left: 20.0),
+                              child: new Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
+                                  new CircleAvatar(
+                                    radius: 30.0,
+                                    backgroundImage: new NetworkImage(
+                                        "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
+                                  ),
                                   new Padding(
-                                      padding: const EdgeInsets.only(left: 5.0),
-                                      child: new Column(
+                                      padding: const EdgeInsets.only(
+                                          top: 8.0, bottom: 8.0),
+                                      child: new Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
-                                        children: buildItem(),
-                                      ))
+                                        children: <Widget>[
+                                          MText(
+                                              title: 'Nothing',
+                                              color: Colors.white,
+                                              fontSize: SizeConst.px12,
+                                              fontWeight: FontWeight.w600),
+                                          new Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: Label(
+                                              height: 16.0,
+                                              width: 26.0,
+                                              color: const Color.fromARGB(
+                                                  255, 255, 220, 150),
+                                              children: <Widget>[
+                                                MText(
+                                                  title: 'LV.3',
+                                                  fontSize: SizeConst.px12,
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      )),
+                                  new Row(
+                                    children: <Widget>[
+                                      MText(
+                                        title: '上海',
+                                        color: Colors.white,
+                                        fontSize: SizeConst.px12,
+                                      ),
+                                      new Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
+                                        child: MText(
+                                          title: '编辑个性签名，布置你的马蜂窝',
+                                          color: Colors.white,
+                                          fontSize: SizeConst.px12,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  new Padding(
+                                      padding: const EdgeInsets.only(top: 5.0),
+                                      child: new Row(children: <Widget>[
+                                        MText(
+                                          title: '6关注',
+                                          color: Colors.white,
+                                          fontSize: SizeConst.px12,
+                                        ),
+                                        new Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: MText(
+                                                title: '0粉丝',
+                                                color: Colors.white,
+                                                fontSize: SizeConst.px12))
+                                      ]))
                                 ],
                               ),
-                            )
-                          ],
-                        )),
-                  ),
-                  new Positioned(
-                    left: 0.0,
-                    right: 0.0,
-                    top: 0.0,
-                    child: MyAppBar(
-                      leading: <Widget>[
-                        new InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: new Padding(
-                            padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                            child: new Image.asset(
-                                'assets/images/icon_arrow_left.png',
-                                color: _color,
-                                height: 24.0,
-                                width: 24.0),
+                            )),
+                        new Container(
+                          height: 60.0,
+                          color: Colors.white,
+                          child: buildRowTab(),
+                        ),
+                        new Container(
+                          height: 250.0,
+                          color: Colors.grey,
+                          child: new Center(
+                            child: MText(title: "dasdasdasdasd"),
                           ),
-                        )
+                        ),
+                        new Container(
+                          height: 250.0,
+                          child: new Center(
+                            child: MText(title: "dasdasdasdasd"),
+                          ),
+                        ),
                       ],
-                      isHeaderGradient: true,
-                      isTitleGradient: true,
-                      rBColor: 255,
-                      gBColor: 255,
-                      bBColor: 255,
-                      title: '四阿哥',
-                      actions: <Widget>[
-                        new Padding(
-                            padding: EdgeInsets.all(0.0),
-                            child: new InkWell(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: new Padding(
-                                padding:
-                                    EdgeInsets.only(top: 12.0, bottom: 12.0),
-                                child: new Image.asset(
-                                    'assets/images/mine_icon_menu.png',
-                                    color: _color,
-                                    height: 22.0,
-                                    width: 22.0),
-                              ),
-                            ))
-                      ],
-                    ),
-                  )
-                ],
+                    )
+                  ])),
+              new Positioned(
+                top: 0.0,
+                left: 0.0,
+                right: 0.0,
+                height: 88.0,
+                child: MyAppBar(
+                  barSettings: {
+                    'leftItems': {
+                      'leftItem': {'type': 2}
+                    },
+                  },
+                ),
               ),
             ],
           ),
-        ),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.of(context).push(new PageRouteBuilder(pageBuilder:
-                      (BuildContext context, Animation<double> animation,
-                          Animation<double> secondaryAnimation) {
-                    return new Search();
-                  }, transitionsBuilder: (
-                    BuildContext context,
-                    Animation<double> animation,
-                    Animation<double> secondaryAnimation,
-                    Widget child,
-                  ) {
-                    return SlideTransition(
-                      position: new Tween<Offset>(
-                        begin: const Offset(1.0, 0.0),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: SlideTransition(
-                        position: new Tween<Offset>(
-                          begin: const Offset(0.0, 0.0),
-                          end: const Offset(-1.0, 0.0),
-                        ).animate(secondaryAnimation),
-                        child: child,
-                      ),
-                    );
-                  }));
-                },
-                child: const Icon(Icons.touch_app),
-                heroTag: 'test2',
-                tooltip: 'test2',
-              ),
-            )
-          ],
         ),
       );
     });

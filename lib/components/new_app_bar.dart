@@ -6,8 +6,14 @@ import 'package:mfw/components/text.dart';
 import 'package:mfw/style/size.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const MyAppBar({this.barSettings, this.height, this.color, this.equalFlex});
+  const MyAppBar(
+      {this.titleOpacity,
+      this.barSettings,
+      this.height,
+      this.color,
+      this.equalFlex});
 
+  final int titleOpacity;
   final Object barSettings;
   final double height;
   final Color color;
@@ -33,10 +39,16 @@ class AppBarState extends State<MyAppBar> {
   void initState() {
     super.initState();
     getNavigateBarParams(widget.barSettings);
-    ScopedModel.of<GlobalModel>(context).changeOpacity(0);
-    ScopedModel.of<GlobalModel>(context).changeTitleOpacity(0);
+    ScopedModel.of<GlobalModel>(context)
+        .changeTitleOpacity(widget.titleOpacity == null ? 255 : widget.titleOpacity);
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    ScopedModel.of<GlobalModel>(context)
+        .changeTitleOpacity(0);
+  }
   void getNavigateBarParams(barSettings) {
     if (barSettings == null) return;
     barSettings.forEach((key, value) {
@@ -50,7 +62,7 @@ class AppBarState extends State<MyAppBar> {
     });
   }
 
-  List<Widget> setNavigateBar() {
+  List<Widget> setNavigateBar(model) {
     List<Widget> _widget = <Widget>[];
     _widget.add(new Expanded(
       flex: 1,
@@ -64,7 +76,10 @@ class AppBarState extends State<MyAppBar> {
       _widget.add(
         new Expanded(
             flex: widget.equalFlex != null ? 1 : 2,
-            child: MText(title: titleItems['text'], maxLines: 1)),
+            child: MText(
+                title: titleItems['text'],
+                maxLines: 1,
+                color: Color.fromARGB(model.titleOpacity, 0, 0, 0))),
       );
     }
     _widget.add(new Expanded(
@@ -129,7 +144,7 @@ class AppBarState extends State<MyAppBar> {
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: setNavigateBar(),
+          children: setNavigateBar(model),
         ),
       );
     });

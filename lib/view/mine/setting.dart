@@ -21,11 +21,11 @@ class Setting extends StatelessWidget {
             'rightItem0': {
               'type': 1,
               'text': '文字',
-              'onTap': Message(),
+              'onTap': '/message',
             },
             'rightItem1': {
               'type': 2,
-              'onTap': Setting(),
+              'onTap': '/setting',
               'image': 'assets/images/icon_setup.png'
             },
           },

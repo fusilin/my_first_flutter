@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:mfw/model/model.dart';
 import 'package:mfw/components/text.dart';
 import 'package:mfw/style/size.dart';
+import 'package:provide/provide.dart';
+import 'package:mfw/provide/provide.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MyAppBar(
@@ -39,16 +39,20 @@ class AppBarState extends State<MyAppBar> {
   void initState() {
     super.initState();
     getNavigateBarParams(widget.barSettings);
-    ScopedModel.of<GlobalModel>(context)
-        .changeTitleOpacity(widget.titleOpacity == null ? 255 : widget.titleOpacity);
+    Provide<ConfigProvide>(builder: (context, child, configProvide) {
+      configProvide.changeTitleOpacity(
+          widget.titleOpacity == null ? 155 : widget.titleOpacity);
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    ScopedModel.of<GlobalModel>(context)
-        .changeTitleOpacity(0);
+    Provide<ConfigProvide>(builder: (context, child, configProvide) {
+      configProvide.changeTitleOpacity(0);
+    });
   }
+
   void getNavigateBarParams(barSettings) {
     if (barSettings == null) return;
     barSettings.forEach((key, value) {
@@ -62,7 +66,7 @@ class AppBarState extends State<MyAppBar> {
     });
   }
 
-  List<Widget> setNavigateBar(model) {
+  List<Widget> setNavigateBar(provide) {
     List<Widget> _widget = <Widget>[];
     _widget.add(new Expanded(
       flex: 1,
@@ -79,7 +83,7 @@ class AppBarState extends State<MyAppBar> {
             child: MText(
                 title: titleItems['text'],
                 maxLines: 1,
-                color: Color.fromARGB(model.titleOpacity, 0, 0, 0))),
+                color: Color.fromARGB(provide.titleOpacity, 0, 0, 0))),
       );
     }
     _widget.add(new Expanded(
@@ -106,9 +110,7 @@ class AppBarState extends State<MyAppBar> {
         _widget.add(new InkWell(
           onTap: () {
             item['onTap'] != null
-                ? Navigator.push(context, MaterialPageRoute(builder: (c) {
-                    return item['onTap'];
-                  }))
+                ? Navigator.pushNamed(context, item['onTap'])
                 : Navigator.pop(context);
           },
           child: new Padding(
@@ -135,16 +137,17 @@ class AppBarState extends State<MyAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
+    return Provide<ConfigProvide>(builder: (context, child, provide){
+      print('实际statusHeight:  ${provide.statusHeight}');
       return new Container(
         padding:
-            EdgeInsets.only(top: model.statusHeight, left: 7.5, right: 7.5),
-        height: (widget.height ?? 48.0) + model.statusHeight,
+        EdgeInsets.only(top: provide.statusHeight, left: 7.5, right: 7.5),
+        height: (widget.height ?? 48.0) + provide.statusHeight,
         color: widget.color ?? new Color.fromARGB(255, 250, 220, 76),
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: setNavigateBar(model),
+          children: setNavigateBar(provide),
         ),
       );
     });

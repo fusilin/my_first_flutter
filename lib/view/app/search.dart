@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:ui';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:mfw/model/model.dart';
+import 'package:provide/provide.dart';
+import 'package:mfw/provide/provide.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/widgets.dart';
@@ -44,69 +44,70 @@ class SearchState extends State<Search> {
   }
 
   Widget _buildPageContent(context) {
-    return new Container(
-      height: 48.0 + ScopedModel.of<GlobalModel>(context).statusHeight,
-      padding: EdgeInsets.only(
-          top: ScopedModel.of<GlobalModel>(context).statusHeight),
-      color: Color(0xffffffff),
-      child: new Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          new Expanded(
-            flex: 1,
-            child: new Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  new Padding(
-                      padding: EdgeInsets.all(0.0),
-                      child: new InkWell(
-                        onTap: () {
-                          Fluttertoast.showToast(msg: '待完善');
-                        },
-                        child: new Padding(
-                          padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                          child: new Image.asset(
-                              'assets/images/icon_message.png',
-                              height: 24.0,
-                              width: 24.0),
-                        ),
-                      ))
-                ]),
-          ),
-          new Expanded(
-              flex: 2,
-              child: new Container(
-                height: 30.0,
-                color: Color(0xffff0000),
-                child: new Text('哈哈'),
-              )),
-          new Expanded(
-            flex: 1,
-            child: new Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  new Padding(
-                      padding: EdgeInsets.all(0.0),
-                      child: new InkWell(
-                        onTap: () {
-                          Fluttertoast.showToast(msg: '待完善');
-                        },
-                        child: new Padding(
-                          padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                          child: new Image.asset(
-                              'assets/images/icon_message.png',
-                              height: 24.0,
-                              width: 24.0),
-                        ),
-                      ))
-                ]),
-          ),
-        ],
-      ),
-    );
+    return Provide<ConfigProvide>(builder: (context, child, configProvide) {
+      new Container(
+        height: 48.0 + configProvide.statusHeight,
+        padding: EdgeInsets.only(top: configProvide.statusHeight),
+        color: Color(0xffffffff),
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            new Expanded(
+              flex: 1,
+              child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    new Padding(
+                        padding: EdgeInsets.all(0.0),
+                        child: new InkWell(
+                          onTap: () {
+                            Fluttertoast.showToast(msg: '待完善');
+                          },
+                          child: new Padding(
+                            padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                            child: new Image.asset(
+                                'assets/images/icon_message.png',
+                                height: 24.0,
+                                width: 24.0),
+                          ),
+                        ))
+                  ]),
+            ),
+            new Expanded(
+                flex: 2,
+                child: new Container(
+                  height: 30.0,
+                  color: Color(0xffff0000),
+                  child: new Text('哈哈'),
+                )),
+            new Expanded(
+              flex: 1,
+              child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    new Padding(
+                        padding: EdgeInsets.all(0.0),
+                        child: new InkWell(
+                          onTap: () {
+                            Fluttertoast.showToast(msg: '待完善');
+                          },
+                          child: new Padding(
+                            padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                            child: new Image.asset(
+                                'assets/images/icon_message.png',
+                                height: 24.0,
+                                width: 24.0),
+                          ),
+                        ))
+                  ]),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   @override
@@ -128,8 +129,7 @@ class SearchState extends State<Search> {
       controller: _refreshController,
       headerBuilder: _buildHeader,
 //        footerBuilder: _buildFooter,
-      headerConfig:
-          new RefreshConfig(triggerDistance: 60.0),
+      headerConfig: new RefreshConfig(triggerDistance: 60.0),
       onRefresh: (up) {
         if (up) {
           new Future.delayed(const Duration(milliseconds: 2000)).then((val) {
@@ -150,8 +150,6 @@ class SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
-      return contentScrollView();
-    });
+    return contentScrollView();
   }
 }

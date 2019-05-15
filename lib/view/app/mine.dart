@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:mfw/model/model.dart';
-import 'package:mfw/view/mine/barcode_scan.dart';
-import 'package:mfw/view/mine/setting.dart';
-import 'package:mfw/view/mine/message.dart';
+import 'package:provide/provide.dart';
+import 'package:mfw/provide/provide.dart';
 import 'package:mfw/core/page_scaffold.dart';
 import 'package:mfw/view/app/mine/header.dart';
 
@@ -17,17 +14,22 @@ class _MineTabState extends State<MineTab> {
   double _offset = 0.0;
 
   void initState() {
-    ScopedModel.of<GlobalModel>(context).changeTitleOpacity(0);
+    Provide<ConfigProvide>(builder: (context, child, configProvide) {
+      configProvide.changeTitleOpacity(0);
+    });
     _mScrollController.addListener(() {
       _offset = _mScrollController.offset;
       if (_offset < 100.0) {
         if (_offset < 0.0) return;
         _isNeedSetAlpha = true;
-        ScopedModel.of<GlobalModel>(context)
-            .changeTitleOpacity(((_offset / 100) * 255).toInt());
+        Provide<ConfigProvide>(builder: (context, child, configProvide) {
+          configProvide.changeTitleOpacity(((_offset / 100) * 255).toInt());
+        });
       } else {
         if (_isNeedSetAlpha) {
-          ScopedModel.of<GlobalModel>(context).changeTitleOpacity(255);
+          Provide<ConfigProvide>(builder: (context, child, configProvide) {
+            configProvide.changeTitleOpacity(255);
+          });
           _isNeedSetAlpha = false;
         }
       }
@@ -37,7 +39,7 @@ class _MineTabState extends State<MineTab> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
+    return Provide<ConfigProvide>(builder: (context, child, configProvide) {
       return PageScaffold(
           titleOpacity: 0,
 //          backgroundColor: Color.fromARGB(255, 250, 220, 76),
@@ -47,19 +49,19 @@ class _MineTabState extends State<MineTab> {
               'leftItem0': {
                 'type': 2,
                 'image': 'assets/images/icon_setup.png',
-                'onTap': Setting()
+                'onTap': '/setting'
               },
               'leftItem2': {
                 'type': 2,
                 'image': 'assets/images/icon_scavenging.png',
-                'onTap': BarcodeScan()
+                'onTap': '/barcodeScan'
               }
             },
             'rightItems': {
               'rightItem': {
                 'type': 2,
                 'image': 'assets/images/icon_message.png',
-                'onTap': Message()
+                'onTap': '/message'
               }
             }
           },
@@ -70,9 +72,7 @@ class _MineTabState extends State<MineTab> {
               onPointerCancel: (s) {},
               child: new SingleChildScrollView(
                 controller: _mScrollController,
-                child: new Column(
-                    children: buildItem(context)
-                ),
+                child: new Column(children: buildItem(context, configProvide)),
               )));
     });
   }

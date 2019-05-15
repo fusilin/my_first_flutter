@@ -23,7 +23,7 @@ class _MessageState extends State<Message> {
           'rightItems': {
             'rightItem0': {
               'type': 2,
-              'onTap': Setting(),
+              'onTap': '/setting',
               'image': 'assets/images/icon_setup.png'
             }
           }

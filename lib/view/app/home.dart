@@ -3,11 +3,12 @@ import 'dart:ui';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:mfw/model/model.dart';
+import 'package:provide/provide.dart';
+import 'package:mfw/provide/provide.dart';
 import 'package:mfw/view/app/search.dart';
 import 'package:mfw/components/dividing_line.dart';
 import 'package:mfw/components/white_space.dart';
+
 //import 'package:cached_network_image/cached_network_image.dart';
 import "package:pull_to_refresh/pull_to_refresh.dart";
 
@@ -590,11 +591,11 @@ class _HomeTab extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
+    return Provide<ConfigProvide>(builder: (context, child, configProvide) {
       return new WillPopScope(
         onWillPop: () => _onWillPop(),
         child: new Container(
-          padding: EdgeInsets.only(top: model.statusHeight ?? 20.0),
+          padding: EdgeInsets.only(top: configProvide.statusHeight ?? 20.0),
           color: new Color(0xffffffff),
           child: new DefaultTabController(
               length: 2,

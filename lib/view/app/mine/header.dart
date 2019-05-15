@@ -59,14 +59,16 @@ List<Widget> buildCard(context) {
   return _widget;
 }
 
-List buildItem(context) {
+List buildItem(context, configProvide) {
   List<Widget> _widget = [];
   _widget.add(
     new GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (c) {
-            return HomePage();
-          }));
+          print(2222);
+          print(configProvide);
+//          Navigator.push(context, MaterialPageRoute(builder: (c) {
+//            return HomePage();
+//          }));
         },
         child: new Container(
           padding: const EdgeInsets.only(

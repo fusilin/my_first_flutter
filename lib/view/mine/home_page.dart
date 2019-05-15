@@ -5,8 +5,8 @@ import 'package:mfw/components/new_app_bar.dart';
 import 'package:mfw/components/text.dart';
 import 'package:mfw/style/size.dart';
 import 'package:mfw/components/label.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:mfw/model/model.dart';
+import 'package:provide/provide.dart';
+import 'package:mfw/provide/provide.dart';
 import 'package:flutter/services.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -53,11 +53,14 @@ class _HomePageState extends State<HomePage> {
     if (offset < 250.0) {
       if (offset < 0.0) return;
       _isNeedSetAlpha = true;
-      ScopedModel.of<GlobalModel>(context)
-          .changeTitleOpacity(((offset / 250) * 255).toInt());
+      Provide<ConfigProvide>(builder: (context, child, configProvide){
+        configProvide.changeTitleOpacity(((offset / 250) * 255).toInt());
+      });
     } else {
       if (_isNeedSetAlpha) {
-        ScopedModel.of<GlobalModel>(context).changeTitleOpacity(255);
+        Provide<ConfigProvide>(builder: (context, child, configProvide){
+          configProvide.changeTitleOpacity(255);
+        });
         _isNeedSetAlpha = false;
       }
     }
@@ -114,164 +117,156 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<GlobalModel>(builder: (context, child, model) {
+    return Provide<ConfigProvide>(builder: (context, child, configProvide) {
       return Scaffold(
-        body: Container(
-          child: Stack(
-            children: <Widget>[
-              new SmartRefresher(
-                  controller: _refreshController,
-                  headerBuilder: _buildHeader,
-                  headerConfig: new RefreshConfig(triggerDistance: 60.0),
-                  onRefresh: (up) {
-                    if (up) {
-                      new Future.delayed(const Duration(milliseconds: 2000))
-                          .then((val) {
-                        _refreshController.sendBack(
-                            true, RefreshStatus.completed);
-                      });
-                    }
-                  },
-                  onOffsetChange: _onOffsetCallback,
-                  child: ListView(children: <Widget>[
-                    new Column(
-                      children: <Widget>[
-                        new Container(
-                            height: 280.0,
-                            width: window.physicalSize.width,
-                            decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                image: const AssetImage(
-                                  'assets/images/mine_home_page.jpg',
-                                ),
-                                fit: BoxFit.cover,
+          body: NestedScrollView(
+            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                new SliverOverlapAbsorber(
+                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  child: new SliverToBoxAdapter(
+                      child: MyAppBar(
+                        barSettings: {
+                          'leftItems': {
+                            'leftItem': {'type': 2}
+                          },
+                        },
+                      )),
+                ),
+              ];
+            },
+            body: new SmartRefresher(
+                controller: _refreshController,
+                headerBuilder: _buildHeader,
+                headerConfig: new RefreshConfig(triggerDistance: 60.0),
+                onRefresh: (up) {
+                  if (up) {
+                    new Future.delayed(const Duration(milliseconds: 2000))
+                        .then((val) {
+                      _refreshController.sendBack(true, RefreshStatus.completed);
+                    });
+                  }
+                },
+                onOffsetChange: _onOffsetCallback,
+                child: ListView(children: <Widget>[
+                  new Column(
+                    children: <Widget>[
+                      new Container(
+                          height: 280.0,
+                          width: window.physicalSize.width,
+                          decoration: BoxDecoration(
+                            image: const DecorationImage(
+                              image: const AssetImage(
+                                'assets/images/mine_home_page.jpg',
                               ),
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.elliptical(
-                                      model.deviceWidth / 2, 15.0),
-                                  bottomLeft: Radius.elliptical(
-                                      model.deviceWidth / 2, 15.0)),
+                              fit: BoxFit.cover,
                             ),
-                            child: new Padding(
-                              padding: EdgeInsets.only(
-                                  top: model.statusHeight + 48.0 + 8.0,
-                                  left: 20.0),
-                              child: new Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  new CircleAvatar(
-                                    radius: 30.0,
-                                    backgroundImage: new NetworkImage(
-                                        "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
-                                  ),
-                                  new Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 8.0, bottom: 8.0),
-                                      child: new Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          MText(
-                                              title: 'Nothing',
-                                              color: Colors.white,
-                                              fontSize: SizeConst.px12,
-                                              fontWeight: FontWeight.w600),
-                                          new Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10.0),
-                                            child: Label(
-                                              height: 16.0,
-                                              width: 26.0,
-                                              color: const Color.fromARGB(
-                                                  255, 255, 220, 150),
-                                              children: <Widget>[
-                                                MText(
-                                                  title: 'LV.3',
-                                                  fontSize: SizeConst.px12,
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      )),
-                                  new Row(
-                                    children: <Widget>[
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.only(
+                                bottomRight:
+                                Radius.elliptical(configProvide.deviceWidth / 2, 15.0),
+                                bottomLeft:
+                                Radius.elliptical(configProvide.deviceWidth / 2, 15.0)),
+                          ),
+                          child: new Padding(
+                            padding: EdgeInsets.only(
+                                top: configProvide.statusHeight + 48.0 + 8.0, left: 20.0),
+                            child: new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new CircleAvatar(
+                                  radius: 30.0,
+                                  backgroundImage: new NetworkImage(
+                                      "http://imglf0.ph.126.net/NkGK253slpQ4qHIoHMPLWg==/6630433347490366965.jpg"),
+                                ),
+                                new Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 8.0, bottom: 8.0),
+                                    child: new Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        MText(
+                                            title: 'Nothing',
+                                            color: Colors.white,
+                                            fontSize: SizeConst.px12,
+                                            fontWeight: FontWeight.w600),
+                                        new Padding(
+                                          padding:
+                                          const EdgeInsets.only(left: 10.0),
+                                          child: Label(
+                                            height: 16.0,
+                                            width: 26.0,
+                                            color: const Color.fromARGB(
+                                                255, 255, 220, 150),
+                                            children: <Widget>[
+                                              MText(
+                                                title: 'LV.3',
+                                                fontSize: SizeConst.px12,
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    )),
+                                new Row(
+                                  children: <Widget>[
+                                    MText(
+                                      title: '上海',
+                                      color: Colors.white,
+                                      fontSize: SizeConst.px12,
+                                    ),
+                                    new Padding(
+                                      padding: const EdgeInsets.only(left: 10.0),
+                                      child: MText(
+                                        title: '编辑个性签名，布置你的马蜂窝',
+                                        color: Colors.white,
+                                        fontSize: SizeConst.px12,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                new Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    child: new Row(children: <Widget>[
                                       MText(
-                                        title: '上海',
+                                        title: '6关注',
                                         color: Colors.white,
                                         fontSize: SizeConst.px12,
                                       ),
                                       new Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10.0),
-                                        child: MText(
-                                          title: '编辑个性签名，布置你的马蜂窝',
-                                          color: Colors.white,
-                                          fontSize: SizeConst.px12,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  new Padding(
-                                      padding: const EdgeInsets.only(top: 5.0),
-                                      child: new Row(children: <Widget>[
-                                        MText(
-                                          title: '6关注',
-                                          color: Colors.white,
-                                          fontSize: SizeConst.px12,
-                                        ),
-                                        new Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10.0),
-                                            child: MText(
-                                                title: '0粉丝',
-                                                color: Colors.white,
-                                                fontSize: SizeConst.px12))
-                                      ]))
-                                ],
-                              ),
-                            )),
-                        new Container(
-                          height: 60.0,
-                          color: Colors.white,
-                          child: buildRowTab(),
+                                          padding:
+                                          const EdgeInsets.only(left: 10.0),
+                                          child: MText(
+                                              title: '0粉丝',
+                                              color: Colors.white,
+                                              fontSize: SizeConst.px12))
+                                    ]))
+                              ],
+                            ),
+                          )),
+                      new Container(
+                        height: 60.0,
+                        color: Colors.white,
+                        child: buildRowTab(),
+                      ),
+                      new Container(
+                        height: 250.0,
+                        color: Colors.grey,
+                        child: new Center(
+                          child: MText(title: "dasdasdasdasd"),
                         ),
-                        new Container(
-                          height: 250.0,
-                          color: Colors.grey,
-                          child: new Center(
-                            child: MText(title: "dasdasdasdasd"),
-                          ),
+                      ),
+                      new Container(
+                        height: 250.0,
+                        child: new Center(
+                          child: MText(title: "dasdasdasdasd"),
                         ),
-                        new Container(
-                          height: 250.0,
-                          child: new Center(
-                            child: MText(title: "dasdasdasdasd"),
-                          ),
-                        ),
-                      ],
-                    )
-                  ])),
-              new Positioned(
-                top: 0.0,
-                left: 0.0,
-                right: 0.0,
-                height: 88.0,
-                child: MyAppBar(
-                  barSettings: {
-                    'leftItems': {
-                      'leftItem': {'type': 2}
-                    },
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+                      ),
+                    ],
+                  )
+                ])),
+          ));
     });
   }
 }

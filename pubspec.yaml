@@ -34,7 +34,7 @@ dependencies:
   video_player: ^0.6.5
   # 图片裁剪
   # 安卓配置：https://pub.flutter-io.cn/packages/image_cropper#-readme-tab-
-#  image_cropper: ^0.0.6
+  #  image_cropper: ^0.0.6
 
   # 分享modal
   share: ^0.5.3
@@ -52,7 +52,8 @@ dependencies:
   splashscreen: ^1.1.0
   # 刷新
   pull_to_refresh: ^1.2.0
-  
+  #  状态管理
+  provide: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -71,40 +72,40 @@ flutter:
   uses-material-design: true
 
   assets:
-  # tabbar
-  - assets/images/screen.png
+    # tabbar
+    - assets/images/screen.png
 
-  - assets/images/ic_tab_homepage_normal.png
-  - assets/images/ic_tab_homepage_selected.png
-  - assets/images/ic_tab_destination_normal.png
-  - assets/images/ic_tab_destination_selected.png
-  - assets/images/ic_tab_expand_normal.png
-  - assets/images/ic_tab_expand_selected.png
-  - assets/images/ic_tab_hotel_normal.png
-  - assets/images/ic_tab_hotel_selected.png
-  - assets/images/ic_tab_mine_normal.png
-  - assets/images/ic_tab_mine_selected.png
+    - assets/images/ic_tab_homepage_normal.png
+    - assets/images/ic_tab_homepage_selected.png
+    - assets/images/ic_tab_destination_normal.png
+    - assets/images/ic_tab_destination_selected.png
+    - assets/images/ic_tab_expand_normal.png
+    - assets/images/ic_tab_expand_selected.png
+    - assets/images/ic_tab_hotel_normal.png
+    - assets/images/ic_tab_hotel_selected.png
+    - assets/images/ic_tab_mine_normal.png
+    - assets/images/ic_tab_mine_selected.png
 
-  - assets/images/icon_arrow_left.png
-  - assets/images/icon_arrow_right.png
+    - assets/images/icon_arrow_left.png
+    - assets/images/icon_arrow_right.png
 
-  # mine
-  - assets/images/icon_setup.png
-  - assets/images/icon_scavenging.png
-  - assets/images/icon_message.png
-  - assets/images/mine_icon_collection.png
-  - assets/images/mine_icon_order.png
-  - assets/images/mine_icon_history.png
-  - assets/images/ic_arrow_right.png
-  - assets/images/mine_icon_camera.png
-  - assets/images/mine_home_page.jpg
-  - assets/images/mine_icon_menu.png
+    # mine
+    - assets/images/icon_setup.png
+    - assets/images/icon_scavenging.png
+    - assets/images/icon_message.png
+    - assets/images/mine_icon_collection.png
+    - assets/images/mine_icon_order.png
+    - assets/images/mine_icon_history.png
+    - assets/images/ic_arrow_right.png
+    - assets/images/mine_icon_camera.png
+    - assets/images/mine_home_page.jpg
+    - assets/images/mine_icon_menu.png
 
 
-  - assets/images/ic_default._head.png
-  - assets/images/ic_my_set.png
-  - assets/images/refresh.png
-  - assets/images/dot.png
+    - assets/images/ic_default._head.png
+    - assets/images/ic_my_set.png
+    - assets/images/refresh.png
+    - assets/images/dot.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:mfw/app.dart';
 import 'dart:async';
-import 'package:mfw/components/route_animation.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:mfw/model/model.dart';
+import 'package:provide/provide.dart';
+import 'package:mfw/provide/provide.dart';
 import 'dart:ui';
-import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:splashscreen/splashscreen.dart';
 
 class Config extends StatefulWidget {
@@ -30,25 +27,23 @@ class _ConfigState extends State<Config> {
     SystemChrome.setSystemUIOverlayStyle(uiStyle);
   }
 
+  final configProvide = ConfigProvide();
+
   @override
   void initState() {
     super.initState();
     // 沉浸式
     appUIStyle();
     new Timer(new Duration(milliseconds: 1500), () {
-      Navigator.pushAndRemoveUntil(context, AnimationPageRoute(builder: (c) {
-        return MfwApp();
-      }), (route) => route == null);
+      Navigator.pushReplacementNamed(context, '/mfwApp');
     });
   }
 
   @override
   void didChangeDependencies() {
-    ScopedModel.of<GlobalModel>(context)
-        .getStatusHeight(MediaQuery.of(context).padding.top);
-    ScopedModel.of<GlobalModel>(context)
-        .getDeviceWidth(MediaQuery.of(context).size.width);
     super.didChangeDependencies();
+    configProvide.getStatusHeight(MediaQuery.of(context).padding.top);
+    configProvide.getDeviceWidth(MediaQuery.of(context).size.width);
   }
 
   @override
@@ -62,7 +57,7 @@ class _ConfigState extends State<Config> {
     // );
     return new Scaffold(
         body: new Center(
-      child: new Text('欢迎页, 等待完善'),
+      child: new Text('欢迎页, 待完善'),
     ));
   }
 }
